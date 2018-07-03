@@ -2,19 +2,32 @@
 
 using namespace std;
 
-ImageSets::ImageSets(int ID, string NAME, int AID, double P, double SA, double MINLAT, double MAXLAT, double MINLONG, double MAXLONG, double PR, string DESCRIP, string DET, string CREATE, string UPDATE)
+ImageSets::ImageSets(int ID, string NAME, int AID, double P, double SA, double ULLAT, double ULLONG, double URLAT, double URLONG, double LRLAT, double LRLONG, double LLLAT, double LLLONG, double PR, string DESCRIP, string DET, string CREATE, string UPDATE)
 {
   application_id = AID;
   created_at = CREATE;
   description = DESCRIP;
   details = DET;
   height = 0;
+  horizontal_latitudinal_change = 0;
   horizontal_resolution = 0;
   id = ID;
-  maximum_latitude = MAXLAT;
-  maximum_longitude = MAXLONG;
-  minimum_latitude = MINLAT;
-  minimum_longitude = MINLONG;
+  lower_left_latitude = LLLAT;
+  lower_left_longitude = LLLONG;
+  lower_left_x = 0;
+  lower_left_y = 0;
+  lower_right_latitude = LRLAT;
+  lower_right_longitude = LRLONG;
+  lower_right_x = 0;
+  lower_right_y = 0;
+  maximum_latitude = 0;
+  maximum_longitude = 0;
+  maximum_x = 0;
+  maximum_y = 0;
+  minimum_latitude = 0;
+  minimum_longitude = 0;
+  minimum_x = 0;
+  minimum_y = 0;
   name = NAME;
   physical_height = 0;
   physical_width = 0;
@@ -22,21 +35,71 @@ ImageSets::ImageSets(int ID, string NAME, int AID, double P, double SA, double M
   priority = P;
   sun_angle = SA;
   updated_at = UPDATE;
-  upper_left_latitude = "";
-  upper_left_longitude = "";
+  upper_left_corner_x_status = "";
+  upper_left_corner_y_status = "";
+  upper_left_latitude = ULLAT;
+  upper_left_longitude = ULLONG;
+  upper_left_x = 0;
+  upper_left_y = 0;
+  upper_right_latitude = URLAT;
+  upper_right_longitude = URLONG;
+  upper_right_x = 0;
+  upper_right_y = 0;
+  vertical_longitudinal_change = 0;
   vertical_resolution = 0;
   width = 0;
-  x_high = 0;
-  x_low = 0;
-  x_origin = 0;
-  y_high = 0;
-  y_low = 0;
-  y_origin = 0;
+  x_shift = 0;
+  y_shift = 0;
+}
+
+double ImageSets::GetHorizontal_latitudinal_change()
+{
+  return horizontal_latitudinal_change;
 }
 
 double ImageSets::GetHorizontal_resolution()
 {
   return horizontal_resolution;
+}
+
+double ImageSets::GetLower_left_latitude()
+{
+  return lower_left_latitude;
+}
+
+double ImageSets::GetLower_left_longitude()
+{
+  return lower_left_longitude;
+}
+
+double ImageSets::GetLower_left_x()
+{
+  return lower_left_x;
+}
+
+double ImageSets::GetLower_left_y()
+{
+  return lower_left_y;
+}
+
+double ImageSets::GetLower_right_latitude()
+{
+  return lower_right_latitude;
+}
+
+double ImageSets::GetLower_right_longitude()
+{
+  return lower_right_longitude;
+}
+
+double ImageSets::GetLower_right_x()
+{
+  return lower_right_x;
+}
+
+double ImageSets::GetLower_right_y()
+{
+  return lower_right_y;
 }
 
 double ImageSets::GetMaximum_latitude()
@@ -49,6 +112,16 @@ double ImageSets::GetMaximum_longitude()
   return maximum_longitude;
 }
 
+double ImageSets::GetMaximum_x()
+{
+  return maximum_x;
+}
+
+double ImageSets::GetMaximum_y()
+{
+  return maximum_y;
+}
+
 double ImageSets::GetMinimum_latitude()
 {
   return minimum_latitude;
@@ -57,6 +130,16 @@ double ImageSets::GetMinimum_latitude()
 double ImageSets::GetMinimum_longitude()
 {
   return minimum_longitude;
+}
+
+double ImageSets::GetMinimum_x()
+{
+  return minimum_x;
+}
+
+double ImageSets::GetMinimum_y()
+{
+  return minimum_y;
 }
 
 double ImageSets::GetPhysical_height()
@@ -84,39 +167,64 @@ double ImageSets::GetSun_angle()
   return sun_angle;
 }
 
+double ImageSets::GetUpper_left_latitude()
+{
+  return upper_left_latitude;
+}
+
+double ImageSets::GetUpper_left_longitude()
+{
+  return upper_left_longitude;
+}
+
+double ImageSets::GetUpper_left_x()
+{
+  return upper_left_x;
+}
+
+double ImageSets::GetUpper_left_y()
+{
+  return upper_left_y;
+}
+
+double ImageSets::GetUpper_right_latitude()
+{
+  return upper_right_latitude;
+}
+
+double ImageSets::GetUpper_right_longitude()
+{
+  return upper_right_longitude;
+}
+
+double ImageSets::GetUpper_right_x()
+{
+  return upper_right_x;
+}
+
+double ImageSets::GetUpper_right_y()
+{
+  return upper_right_y;
+}
+
+double ImageSets::GetVertical_longitudinal_change()
+{
+  return vertical_longitudinal_change;
+}
+
 double ImageSets::GetVertical_resolution()
 {
   return vertical_resolution;
 }
 
-double ImageSets::GetX_high()
+double ImageSets::ImageSets::GetX_shift()
 {
-  return x_high;
-}
- 
-double ImageSets::GetX_low()
-{
-  return x_low;
+  return x_shift;
 }
 
-double ImageSets::GetX_origin()
+double ImageSets::GetY_shift()
 {
-  return x_origin;
-}
-
-double ImageSets::GetY_high()
-{
-  return y_high;
-}
-
-double ImageSets::GetY_low()
-{
-  return y_low;
-}
-
-double ImageSets::GetY_origin()
-{
-  return y_origin;
+  return y_shift;
 }
 
 int ImageSets::GetApplication_id()
@@ -137,6 +245,11 @@ int ImageSets::GetId()
 int ImageSets::GetWidth()
 {
   return width;
+}
+
+ProjectiveTransformation ImageSets::GetProjective_transformation()
+{
+  return pt;
 }
 
 string ImageSets::GetCreated_at()
@@ -164,23 +277,23 @@ string ImageSets::GetUpdated_at()
   return updated_at;
 }
 
-string ImageSets::GetUpper_left_latitude()
+string ImageSets::GetUpper_left_corner_x_status()
 {
-  return upper_left_latitude;
+  return upper_left_corner_x_status;
 }
 
-string ImageSets::GetUpper_left_longitude()
+string ImageSets::GetUpper_left_corner_y_status()
 {
-  return upper_left_longitude;
+  return upper_left_corner_y_status;
 }
 
-void ImageSets::AuxilaryFunction(string XORIGIN, string YORIGIN)
+void ImageSets::AuxilaryFunction()
 {
-  /*********************************/
-  /* Step 1: Set image orientation */
-  /*********************************/
-  SetUpper_left_longitude(XORIGIN);
-  SetUpper_left_latitude(YORIGIN);
+  /*****************************************************/
+  /* Step 1: Determine image reference point and shape */
+  /*****************************************************/
+  DetermineImageReference();
+  DetermineImageShape();
 
   /*******************************************/
   /* Step 2: Retrieve image width and height */
@@ -188,20 +301,23 @@ void ImageSets::AuxilaryFunction(string XORIGIN, string YORIGIN)
   RetrieveWidth();
   RetrieveHeight();
 
-  /*****************************************************/
-  /* Step 3: Calculate (x, y) position of image origin */
-  /*****************************************************/
-  CalculateX_origin();
-  CalculateY_origin();
+  /*******************************************************************/
+  /* Step 3: Calculate bounding region x and y cartesian coordinates */
+  /*******************************************************************/
+  CalculateUpper_left_x();
+  CalculateUpper_left_y();
+  CalculateUpper_right_x();
+  CalculateUpper_right_y();
+  CalculateLower_right_x();
+  CalculateLower_right_y();
+  CalculateLower_left_x();
+  CalculateLower_left_y();
 
   /*******************************************************/
-  /* Step 4: Calculate bounding region x and y positions */
+  /* Step 4: Determine minimum/maximum coordinate values */
   /*******************************************************/
-  CalculateX_high();
-  CalculateX_low();
-  CalculateY_high();
-  CalculateY_low();
-
+  DetermineCoordinateExtrema();
+  
   /*****************************************************/
   /* Step 5: Calculate physical image width and height */
   /*****************************************************/
@@ -213,6 +329,17 @@ void ImageSets::AuxilaryFunction(string XORIGIN, string YORIGIN)
   /***************************************************************/
   CalculateHorizontal_resolution();
   CalculateVertical_resolution();
+
+  /**********************************************************************************/
+  /* Step 7: Calculate x and y shift from rectangular region into a rhomboid region */
+  /**********************************************************************************/
+  CalculateXShift();
+  CalculateYShift();
+  
+  /*******************************************/
+  /* Step 8: Calculate transformation matrix */
+  /*******************************************/
+  CalculateTransforms();
 }
 
 void ImageSets::CalculateHorizontal_resolution()
@@ -233,20 +360,20 @@ void ImageSets::CalculateHorizontal_resolution()
   /*******************************/
   n_pixels = width;
 
-  /****************************************/
-  /* Calulate horizontal pixel resolution */
-  /****************************************/
+  /*****************************************/
+  /* Calculate horizontal pixel resolution */
+  /*****************************************/
   horizontal_resolution = x_range/n_pixels;
 }
 
 void ImageSets::CalculatePhysical_height()
 {
-  physical_height = y_high-y_low;
+  physical_height = (upper_left_corner_y_status.compare("MAX") == 0) ? upper_left_y-lower_left_y : lower_left_y-upper_left_y;
 }
 
 void ImageSets::CalculatePhysical_width()
 {
-  physical_width = x_high-x_low;
+  physical_width = (upper_left_corner_x_status.compare("MAX") == 0) ? upper_left_x-upper_right_x : upper_right_x-upper_left_x;
 }
 
 void ImageSets::CalculateVertical_resolution()
@@ -273,79 +400,225 @@ void ImageSets::CalculateVertical_resolution()
   vertical_resolution = y_range/n_pixels;
 }
 
-void ImageSets::CalculateX_high()
+void ImageSets::CalculateLower_left_x()
 {
-  /*****************************************/
-  /* Calculate maximum x position of image */
-  /*****************************************/
-  double lambda = maximum_longitude*(M_PI/180); // Unit: radians
-  double lambda_0 = 0; // Central meridian (Unit: radians)
-  double phi_1 = 0; // Flat square projection - Can also be interpreted as the equator (Unit: radians)
-  //double R_moon = 1.0; // Unit sphere
-  double R_moon = 1737400; // Physical radius of the moon in meters 
-  x_high = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon); // Unit: meter
+  /**************************************************/
+  /* Calculate image's lower left corner x position */
+  /**************************************************/
+  double lambda = lower_left_longitude*(M_PI/180); // Unit: radian
+  double lambda_0 = 0; // Central meridian (Unit: radian)
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter) 
+  lower_left_x = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon); // Unit: meter
 }
 
-void ImageSets::CalculateX_low()
+void ImageSets::CalculateLower_left_y()
 {
-  /*****************************************/
-  /* Calculate minimum x position of image */
-  /*****************************************/
-  double lambda = minimum_longitude*(M_PI/180); // Unit: radians
-  double lambda_0 = 0; // Central meridian (Unit: radians)
-  double phi_1 = 0; // Flat square projection - Can also be interpreted as the equator (Unit: radians)
-  //double R_moon = 1.0; // Unit sphere
-  double R_moon = 1737400; // Physical radius of the moon in meters 
-  x_low = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon); // Unit: meter
+  /*******************************************/
+  /* Calculate image's lower left y position */
+  /*******************************************/
+  double phi = lower_left_latitude*(M_PI/180); // Unit: radian
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
+  lower_left_y = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
 }
 
-void ImageSets::CalculateX_origin()
+void ImageSets::CalculateLower_right_x()
 {
-  /*********************************************************************************************/
-  /* Calculate x position of image's upper left corner as viewed by user (Defined as x origin) */
-  /*********************************************************************************************/
-  double lambda = (upper_left_longitude.compare("MAX") == 0) ? maximum_longitude*(M_PI/180) : minimum_longitude*(M_PI/180); // Longitude of image's left edge as viewed by user (Unit: radians)
-  double lambda_0 = 0; // Central meridian (Unit: radians)
-  double phi_1 = 0; // Flat square projection - Can also be interpreted as the equator (Unit: radians)
-  //double R_moon = 1.0; // Unit sphere
-  double R_moon = 1737400; // Physical radius of the moon in meters 
-  x_origin = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon); // Unit: meter
+  /***************************************************/
+  /* Calculate image's lower right corner x position */
+  /***************************************************/
+  double lambda = lower_right_longitude*(M_PI/180); // Unit: radian
+  double lambda_0 = 0; // Central meridian (Unit: radian)
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter) 
+  lower_right_x = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon); // Unit: meter
 }
 
-void ImageSets::CalculateY_high()
+void ImageSets::CalculateLower_right_y()
 {
-  /*****************************************/
-  /* Calculate maximum y position of image */
-  /*****************************************/
-  double phi = maximum_latitude*(M_PI/180); // Unit: radians
-  double phi_1 = 0; // Flat square projection - Can also be interpreted as the equator (Unit: radians)
-  //double R_moon = 1.0; // Unit sphere
-  double R_moon = 1737400; // Physical radius of the moon (Unit: meter)
-  y_high = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
+  /********************************************/
+  /* Calculate image's lower right y position */
+  /********************************************/
+  double phi = lower_right_latitude*(M_PI/180); // Unit: radian
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
+  lower_right_y = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
 }
 
-void ImageSets::CalculateY_low()
+void ImageSets::CalculateTransforms()
 {
-  /*****************************************/
-  /* Calculate maximum y position of image */
-  /*****************************************/
-  double phi = minimum_latitude*(M_PI/180); // Unit: radians
-  double phi_1 = 0; // Flat square projection - Can also be interpreted as the equator (Unit: radians)
-  //double R_moon = 1.0; // Unit sphere
-  double R_moon = 1737400; // Physical radius of the moon (Unit: meter)
-  y_low = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
+  /*************************************/
+  /* Declaration of function variables */
+  /*************************************/
+  vector < vector <double> > source_coordinates(4, vector <double> (2));
+  vector < vector <double> > target_coordinates(4, vector <double> (2));
+
+  /******************************************/
+  /* Retrieve source and target coordinates */
+  /******************************************/
+  source_coordinates[0][0] = upper_left_longitude;
+  source_coordinates[0][1] = upper_left_latitude;
+  source_coordinates[1][0] = upper_right_longitude;
+  source_coordinates[1][1] = upper_right_latitude;
+  source_coordinates[2][0] = lower_right_longitude;
+  source_coordinates[2][1] = lower_right_latitude;
+  source_coordinates[3][0] = lower_left_longitude;
+  source_coordinates[3][1] = lower_left_latitude;
+  target_coordinates[0][0] = 0;
+  target_coordinates[0][1] = 0;
+  target_coordinates[1][0] = width;
+  target_coordinates[1][1] = 0;
+  target_coordinates[2][0] = width;
+  target_coordinates[2][1] = height;
+  target_coordinates[3][0] = 0;
+  target_coordinates[3][1] = height;
+  
+  /************************************/
+  /* Compute transformation matricies */
+  /************************************/
+  ProjectiveTransformation PT(source_coordinates, target_coordinates);
+
+  /***********************************/
+  /* Record transformation matricies */
+  /***********************************/
+  pt = PT;
 }
 
-void ImageSets::CalculateY_origin()
+void ImageSets::CalculateUpper_left_x()
 {
-  /*********************************************************************************************/
-  /* Calculate y position of image's upper left corner as viewed by user (Defined as y origin) */
-  /*********************************************************************************************/
-  double phi = (upper_left_latitude.compare("MAX") == 0) ? maximum_latitude*(M_PI/180) : minimum_latitude*(M_PI/180); // Latitude of image's top edge as viewed by user (Unit: radians)
-  double phi_1 = 0; // Flat square projection - Can also be interpreted as the equator (Unit: radians)
-  //double R_moon = 1.0; // Unit sphere
-  double R_moon = 1737400; // Physical radius of the moon (Unit: meter)
-  y_origin = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
+  /**************************************************/
+  /* Calculate image's upper left corner x position */
+  /**************************************************/
+  double lambda = upper_left_longitude*(M_PI/180); // Unit: radian
+  double lambda_0 = 0; // Central meridian (Unit: radian)
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter) 
+  upper_left_x = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon); // Unit: meter
+}
+
+void ImageSets::CalculateUpper_left_y()
+{
+  /*******************************************/
+  /* Calculate image's upper left y position */
+  /*******************************************/
+  double phi = upper_left_latitude*(M_PI/180); // Unit: radian
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean rsadius of the moon (Unit: meter)
+  upper_left_y = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
+}
+
+void ImageSets::CalculateUpper_right_x()
+{
+  /***************************************************/
+  /* Calculate image's upper right corner x position */
+  /***************************************************/
+  double lambda = upper_right_longitude*(M_PI/180); // Unit: radian
+  double lambda_0 = 0; // Central meridian (Unit: radian)
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter) 
+  upper_right_x = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon); // Unit: meter
+}
+
+void ImageSets::CalculateUpper_right_y()
+{
+  /*******************************************/
+  /* Calculate image's lower left y position */
+  /*******************************************/
+  double phi = upper_right_latitude*(M_PI/180); // Unit: radian
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
+  upper_right_y = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
+}
+
+void ImageSets::CalculateXShift()
+{
+  /*******************************************/
+  /* Calculate shift in x per pixel from     */
+  /* rectangular region into rhomboid region */
+  /*******************************************/
+  double lambda = vertical_longitudinal_change*(M_PI/180); // Unit: radian
+  double lambda_0 = 0; // Central meridian (Unit: radian)
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
+  x_shift = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon)/height; // Unit: meters per pixel;
+}
+
+void ImageSets::CalculateYShift()
+{
+  /*******************************************/
+  /* Calculate shift in y per pixel from     */
+  /* rectangular region into rhomboid region */
+  /*******************************************/
+  double phi = horizontal_latitudinal_change*(M_PI/180); // Unit: radian
+  double phi_1 = 0; // Flat square projection (Unit: radian)
+  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
+  y_shift = EquirectangularProjection::CalculateY(phi, phi_1, R_moon)/width; // Unit: meters per pixel
+}
+
+void ImageSets::DetermineCoordinateExtrema()
+{
+  /***************************************************************************/
+  /* Determine maximum/minimum selenographic and cartesian coordinate values */
+  /***************************************************************************/
+  if(upper_left_corner_x_status.compare("MAX") == 0)
+  {
+    maximum_longitude = (upper_left_longitude > lower_left_longitude) ? upper_left_longitude : lower_left_longitude;
+    maximum_x = (upper_left_x > lower_left_x) ? upper_left_x : lower_left_x;
+    minimum_longitude = (upper_right_longitude < lower_right_longitude) ? upper_right_longitude : lower_right_longitude;
+    minimum_x = (upper_right_x < lower_right_x) ? upper_right_x : lower_right_x;
+  }
+  else
+  {
+    maximum_longitude = (upper_right_longitude > lower_right_longitude) ? upper_right_longitude : lower_right_longitude;
+    maximum_x = (upper_right_x > lower_right_x) ? upper_right_x : lower_right_x;
+    minimum_longitude = (upper_left_longitude < lower_left_longitude) ? upper_left_longitude : lower_left_longitude;
+    minimum_x = (upper_left_x < lower_left_x) ? upper_left_x : lower_left_x;
+  }
+  if(upper_left_corner_y_status.compare("MAX") == 0)
+  {
+    maximum_latitude = (upper_left_latitude > upper_right_latitude) ? upper_left_latitude : upper_right_latitude;
+    maximum_y = (upper_left_y > upper_right_y) ? upper_left_y : upper_right_y;
+    minimum_latitude = (lower_left_latitude < lower_right_latitude) ? lower_left_latitude : lower_right_latitude;
+    minimum_y = (lower_left_y < lower_right_y) ? lower_left_y : lower_right_y;
+  }
+  else
+  {
+    maximum_latitude = (lower_left_latitude > lower_right_latitude) ? lower_left_latitude : lower_right_latitude;
+    maximum_y = (lower_left_y > lower_right_y) ? lower_left_y : lower_right_y;
+    minimum_latitude = (upper_left_latitude < upper_right_latitude) ? upper_left_latitude : upper_right_latitude;
+    minimum_y = (upper_left_y < upper_right_y) ? upper_left_y : upper_right_y;
+  }
+}
+
+void ImageSets::DetermineImageReference()
+{
+  /*******************************************************/
+  /* Determine if x coordinate of upper left hand corner */
+  /* (user perspective) is a minimum or a maximum with   */
+  /* respect to the upper right hand corner              */
+  /*******************************************************/
+  upper_left_corner_x_status = (upper_left_longitude < upper_right_longitude) ? "MIN" : "MAX";
+  
+  /*******************************************************/
+  /* Determine if y coordinate of upper left hand corner */
+  /* (user perspective) is a minimum or a maximum with   */
+  /* respect to the lower left hand corner               */
+  /*******************************************************/
+  upper_left_corner_y_status = (upper_left_latitude < lower_left_latitude) ? "MIN" : "MAX";
+}
+
+void ImageSets::DetermineImageShape()
+{
+  /************************************************/
+  /* Determine if longitude varies along a column */
+  /************************************************/
+  vertical_longitudinal_change = lower_left_longitude-upper_left_longitude;
+  
+  /********************************************/
+  /* Determine if latitude varies along a row */
+  /********************************************/
+  horizontal_latitudinal_change = upper_right_latitude-upper_left_latitude;
 }
 
 void ImageSets::RetrieveHeight()
@@ -370,24 +643,4 @@ void ImageSets::RetrieveWidth()
   int length = p2-p1;
   string str = details.substr(p1, length);
   width = stoi(str, nullptr);
-}
-
-void ImageSets::SetHorizontal_resolution(double d)
-{
-  horizontal_resolution = d;
-}
-
-void ImageSets::SetUpper_left_latitude(string str)
-{
-  upper_left_latitude = str;
-}
-
-void ImageSets::SetUpper_left_longitude(string str)
-{
-  upper_left_longitude = str;
-}
-
-void ImageSets::SetVertical_resolution(double d)
-{
-  vertical_resolution = d;
 }

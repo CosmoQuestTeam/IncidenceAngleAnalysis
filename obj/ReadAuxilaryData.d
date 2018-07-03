@@ -1,17 +1,15 @@
-/Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/obj/ReadAuxilaryData.o: \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/src/ReadAuxilaryData.cc \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/ReadAuxilaryData.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/IncidenceAngles.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/MasterImageOrientation.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/PixelResolution.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/Utilities.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/Images.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/ImageSets.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/EquirectangularProjection.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/Marks.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/OverlappedImages.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/Rectangle.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/RetrieveImages.h \
+/Users/mrichardson/Desktop/Incidence_Angle_Analysis/obj/ReadAuxilaryData.o: \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/src/ReadAuxilaryData.cc \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ReadAuxilaryData.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/IncidenceAngles.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Utilities.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Images.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/EquirectangularProjection.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ProjectiveTransformation.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ImageSets.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/OverlappedImages.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Rectangle.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveImages.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/exception.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/build_config.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/prepared_statement.h \
@@ -25,14 +23,7 @@
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/connection.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/warning.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/variant.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/RetrieveImageSets.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SearchImages.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SearchIncidenceAngles.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SearchMarks.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortImages.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortImageSets.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortIncidenceAngles.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortMasterImageOrientation.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortMarks.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortOverlappedImages.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortPixelResolutions.h
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveImageSets.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortImages.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortImageSets.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortIncidenceAngles.h

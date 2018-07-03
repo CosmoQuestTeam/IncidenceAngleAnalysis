@@ -29,34 +29,44 @@ void RetrieveImages::Display(vector <Images> &list)
   /********************/
   /* Print header row */
   /********************/
-  printf("%-5s %-4s %-3s %-19s %-7s %4s %4s %4s %11s %11s\n", 
+  printf("%-5s %-4s %-3s %-19s %4s %4s %4s %11s %11s %11s %11s %11s %11s %11s %11s\n", 
 	 "ID", 
 	 "ISID", 
 	 "AID", 
 	 "NAME", 
-	 "DETAILS",
 	 "PR",
 	 "HR",
 	 "VR",
-	 "XORIGIN", 
-	 "YORIGIN");
+	 "ULX",
+	 "ULY",
+	 "URX",
+	 "URY",
+	 "LRX",
+	 "LRY",
+	 "LLX",
+	 "LLY");
   
   /********************/
   /* Print data rows */
   /********************/
   nelements = (int)list.size();
   for(int i=0; i<nelements; i++)
-    printf("%-5d %-4d %-3d %-19s %-7.7s %4.2lf %4.2lf %4.2lf %11.2lf %11.2lf\n", 
+    printf("%-5d %-4d %-3d %-19s %4.2lf %4.2lf %4.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf\n", 
 	   list[i].GetId(), 
 	   list[i].GetImage_set_id(), 
 	   list[i].GetApplication_id(), 
 	   list[i].GetName().c_str(), 
-	   list[i].GetDetails().c_str(), 
 	   list[i].GetPixel_resolution(),
 	   list[i].GetHorizontal_resolution(),
 	   list[i].GetVertical_resolution(),
-	   list[i].GetX_origin(), 
-	   list[i].GetY_origin());
+	   list[i].GetUpper_left_x(), 
+	   list[i].GetUpper_left_y(),
+	   list[i].GetUpper_right_x(), 
+	   list[i].GetUpper_right_y(),
+	   list[i].GetLower_right_x(), 
+	   list[i].GetLower_right_y(),
+	   list[i].GetLower_left_x(), 
+	   list[i].GetLower_left_y());
 
   return;
 }

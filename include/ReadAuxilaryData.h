@@ -7,8 +7,6 @@
 #include <string>
 #include <vector>
 #include "IncidenceAngles.h"
-#include "MasterImageOrientation.h"
-#include "PixelResolution.h"
 #include "Utilities.h"
 
 class ReadAuxilaryData
@@ -19,8 +17,6 @@ class ReadAuxilaryData
   private:
     std::string AuxilaryDataFile;
     std::vector <IncidenceAngles> incidenceangledata;
-    std::vector <MasterImageOrientation> masterimageorientationdata;
-    std::vector <PixelResolution> pixelresolutiondata;
 
   /***********************************/
   /* Declaration of class functions */
@@ -28,12 +24,8 @@ class ReadAuxilaryData
   public:
     ReadAuxilaryData(std::string);
     std::vector <IncidenceAngles> GetIncidenceAngleData();
-    std::vector <MasterImageOrientation> GetMasterImageOrientationData();
-    std::vector <PixelResolution> GetPixelResolutionData();
     void Read();
     static void Display(std::vector <IncidenceAngles> &);
-    static void Display(std::vector <MasterImageOrientation> &);
-    static void Display(std::vector <PixelResolution> &);
 };
 
 #endif

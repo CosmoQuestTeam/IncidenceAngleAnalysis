@@ -1,3 +1,3 @@
-/Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/obj/EquirectangularProjection.o: \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/src/EquirectangularProjection.cc \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/EquirectangularProjection.h
+/Users/mrichardson/Desktop/Incidence_Angle_Analysis/obj/EquirectangularProjection.o: \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/src/EquirectangularProjection.cc \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/EquirectangularProjection.h

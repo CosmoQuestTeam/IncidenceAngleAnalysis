@@ -1,0 +1,12 @@
+# Ignore following directories
+Paper/
+Results/
+
+# Ignore following file types
+*.jpeg
+*.jpg
+*.fits
+*.pdf
+*.png
+*.ps
+*.txt

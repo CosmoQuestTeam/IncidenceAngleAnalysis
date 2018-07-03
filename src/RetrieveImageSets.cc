@@ -29,40 +29,52 @@ void RetrieveImageSets::Display(vector <ImageSets> &list)
   /********************/
   /* Print header row */
   /********************/
-  printf("%-2s %-12s %-3s %6s %6s %7s %7s %-7s %4s %4s %4s %11s %11s\n", 
+  printf("%-2s %-12s %-3s %8s %8s %8s %8s %8s %8s %8s %8s %-7s %4s %6s %6s %6s %6s %9s %9s\n", 
 	 "ID",
 	 "NAME",
 	 "AID",
-	 "MINLAT",
-	 "MAXLAT",
-	 "MINLONG", 
-	 "MAXLONG",  
+	 "ULLAT",
+	 "ULLONG",
+	 "URLAT", 
+	 "URLONG",
+	 "LRLAT",
+	 "LRLONG",
+	 "LLLAT", 
+	 "LLLONG",
 	 "DETAILS", 
 	 "PR",
 	 "HR",
 	 "VR",
-	 "XORIGIN", 
-	 "YORIGIN");
+	 "HLC",
+	 "VLC",
+	 "ULXSTATUS", 
+	 "ULYSTATUS");
   
   /********************/
   /* Print data rows */
   /********************/
   nelements = (int)list.size();
   for(int i=0; i<nelements; i++)
-    printf("%-2d %-12s %-3d %6.2lf %6.2lf %7.2lf %7.2lf %-7.7s %4.2lf %4.2lf %4.2lf %11.2lf %11.2lf\n", 
+    printf("%-2d %-12s %-3d %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %-7.7s %4.2lf %6.4lf %6.4lf %6.4lf %6.4lf %9s %9s\n", 
 	   list[i].GetId(), 
 	   list[i].GetName().c_str(), 
 	   list[i].GetApplication_id(), 
-	   list[i].GetMinimum_latitude(), 
-	   list[i].GetMaximum_latitude(), 
-	   list[i].GetMinimum_longitude(), 
-	   list[i].GetMaximum_longitude(), 
+	   list[i].GetUpper_left_latitude(), 
+	   list[i].GetUpper_left_longitude(), 
+	   list[i].GetUpper_right_latitude(), 
+	   list[i].GetUpper_right_longitude(),
+	   list[i].GetLower_right_latitude(), 
+	   list[i].GetLower_right_longitude(), 
+	   list[i].GetLower_left_latitude(), 
+	   list[i].GetLower_left_longitude(),
 	   list[i].GetDetails().c_str(),
 	   list[i].GetPixel_resolution(), 
 	   list[i].GetHorizontal_resolution(),
 	   list[i].GetVertical_resolution(),
-	   list[i].GetX_origin(), 
-	   list[i].GetY_origin());
+	   list[i].GetHorizontal_latitudinal_change(),
+	   list[i].GetVertical_longitudinal_change(),
+	   list[i].GetUpper_left_corner_x_status().c_str(), 
+	   list[i].GetUpper_left_corner_y_status().c_str());
 
   return;
 }
@@ -105,7 +117,7 @@ void RetrieveImageSets::Fetch()
       int application_id = rs->getInt("application_id");
       if(application_id == 1)
       {
-	ImageSets myImageSet(rs->getInt("id"), rs->getString("name"), application_id, 0, 0, rs->getDouble("minimum_latitude"), rs->getDouble("maximum_latitude"), rs->getDouble("minimum_longitude"), rs->getDouble("maximum_longitude"), rs->getDouble("pixel_resolution"), "", rs->getString("details"), "", "");
+	ImageSets myImageSet(rs->getInt("id"), rs->getString("name"), application_id, 0, 0, rs->getDouble("upper_left_latitude"), rs->getDouble("upper_left_longitude"), rs->getDouble("upper_right_latitude"), rs->getDouble("upper_right_longitude"), rs->getDouble("lower_right_latitude"), rs->getDouble("lower_right_longitude"), rs->getDouble("lower_left_latitude"), rs->getDouble("lower_left_longitude"), rs->getDouble("pixel_resolution"), "", rs->getString("details"), "", "");
 	data.push_back(myImageSet);
       }
     }

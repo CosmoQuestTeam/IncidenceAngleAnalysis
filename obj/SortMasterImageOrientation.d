@@ -1,4 +1,4 @@
-/Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/obj/SortMasterImageOrientation.o: \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/src/SortMasterImageOrientation.cc \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/SortMasterImageOrientation.h \
-  /Users/MRichardson/Desktop/Planetary_Science_Institute/CosmoQuest/CraterProjects/Incidence_Angle_Analysis/include/MasterImageOrientation.h
+/Users/mrichardson/Desktop/Incidence_Angle_Analysis/obj/SortMasterImageOrientation.o: \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/src/SortMasterImageOrientation.cc \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortMasterImageOrientation.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/MasterImageOrientation.h

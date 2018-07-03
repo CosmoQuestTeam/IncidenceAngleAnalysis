@@ -43,6 +43,70 @@ bool SearchImages::EqualityComparison(vector <Images> &images, int index, string
   {
     return (images[index].GetImage_set_id() == *static_cast<int *>(value));
   }
+  if(field.compare("lower_left_latitude") == 0)
+  {
+    return (images[index].GetLower_left_latitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_longitude") == 0)
+  {
+    return (images[index].GetLower_left_longitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_x") == 0)
+  {
+    return (images[index].GetLower_left_x() == *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_y") == 0)
+  {
+    return (images[index].GetLower_left_y() == *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_latitude") == 0)
+  {
+    return (images[index].GetLower_right_latitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_longitude") == 0)
+  {
+    return (images[index].GetLower_right_longitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_x") == 0)
+  {
+    return (images[index].GetLower_right_x() == *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_y") == 0)
+  {
+    return (images[index].GetLower_right_y() == *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_latitude") == 0)
+  {
+    return (images[index].GetMaximum_latitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_longitude") == 0)
+  {
+    return (images[index].GetMaximum_longitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_x") == 0)
+  {
+    return (images[index].GetMaximum_x() == *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_y") == 0)
+  {
+    return (images[index].GetMaximum_y() == *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_latitude") == 0)
+  {
+    return (images[index].GetMinimum_latitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_longitude") == 0)
+  {
+    return (images[index].GetMinimum_longitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_x") == 0)
+  {
+    return (images[index].GetMinimum_x() == *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_y") == 0)
+  {
+    return (images[index].GetMinimum_y() == *static_cast<double *>(value));
+  }
   if(field.compare("name") == 0)
   {
     return (images[index].GetName().compare(*static_cast<string *>(value)) == 0);
@@ -75,13 +139,45 @@ bool SearchImages::EqualityComparison(vector <Images> &images, int index, string
   {
     return (images[index].GetUpdated_at().compare(*static_cast<string *>(value)) == 0);
   }
+  if(field.compare("upper_left_corner_x_status") == 0)
+  {
+    return (images[index].GetUpper_left_corner_x_status().compare(*static_cast<string *>(value)) == 0);
+  }
+  if(field.compare("upper_left_corner_y_status") == 0)
+  {
+    return (images[index].GetUpper_left_corner_y_status().compare(*static_cast<string *>(value)) == 0);
+  }
+  if(field.compare("upper_left_latitude") == 0)
+  {
+    return (images[index].GetUpper_left_latitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("upper_left_longitude") == 0)
+  {
+    return (images[index].GetUpper_left_longitude() == *static_cast<double *>(value));
+  }
   if(field.compare("upper_left_x") == 0)
   {
-    return (images[index].GetUpper_left_x().compare(*static_cast<string *>(value)) == 0);
+    return (images[index].GetUpper_left_x() == *static_cast<double *>(value));
   }
   if(field.compare("upper_left_y") == 0)
   {
-    return (images[index].GetUpper_left_y().compare(*static_cast<string *>(value)) == 0);
+    return (images[index].GetUpper_left_y() == *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_latitude") == 0)
+  {
+    return (images[index].GetUpper_right_latitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_longitude") == 0)
+  {
+    return (images[index].GetUpper_right_longitude() == *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_x") == 0)
+  {
+    return (images[index].GetUpper_right_x() == *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_y") == 0)
+  {
+    return (images[index].GetUpper_right_y() == *static_cast<double *>(value));
   }
   if(field.compare("vertical_resolution") == 0)
   {
@@ -91,45 +187,29 @@ bool SearchImages::EqualityComparison(vector <Images> &images, int index, string
   {
     return (images[index].GetWidth() == *static_cast<int *>(value));
   }
-  if(field.compare("x_high") == 0)
-  {
-    return (images[index].GetX_high() == *static_cast<double *>(value));
-  }
-  if(field.compare("x_low") == 0)
-  {
-    return (images[index].GetX_low() == *static_cast<double *>(value));
-  }
   if(field.compare("x_offset") == 0)
   {
     return (images[index].GetX_offset() == *static_cast<double *>(value));
-  }
-  if(field.compare("x_origin") == 0)
-  {
-    return (images[index].GetX_origin() == *static_cast<double *>(value));
   }
   if(field.compare("x_relative") == 0)
   {
     return (images[index].GetX_relative() == *static_cast<double *>(value));
   }
-  if(field.compare("y_high") == 0)
+  if(field.compare("x_shift") == 0)
   {
-    return (images[index].GetY_high() == *static_cast<double *>(value));
-  }
-  if(field.compare("y_low") == 0)
-  {
-    return (images[index].GetY_low() == *static_cast<double *>(value));
+    return (images[index].GetX_shift() == *static_cast<double *>(value));
   }
   if(field.compare("y_offset") == 0)
   {
     return (images[index].GetY_offset() == *static_cast<double *>(value));
   }
-  if(field.compare("y_origin") == 0)
-  {
-    return (images[index].GetY_origin() == *static_cast<double *>(value));
-  }
   if(field.compare("y_relative") == 0)
   {
     return (images[index].GetY_relative() == *static_cast<double *>(value));
+  }
+  if(field.compare("y_shift") == 0)
+  {
+    return (images[index].GetY_shift() == *static_cast<double *>(value));
   }
 
   return false;
@@ -176,6 +256,70 @@ bool SearchImages::GreaterThanComparison(vector <Images> &images, int index, str
   {
     return (images[index].GetImage_set_id() > *static_cast<int *>(value));
   }
+  if(field.compare("lower_left_latitude") == 0)
+  {
+    return (images[index].GetLower_left_latitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_longitude") == 0)
+  {
+    return (images[index].GetLower_left_longitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_x") == 0)
+  {
+    return (images[index].GetLower_left_x() > *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_y") == 0)
+  {
+    return (images[index].GetLower_left_y() > *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_latitude") == 0)
+  {
+    return (images[index].GetLower_right_latitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_longitude") == 0)
+  {
+    return (images[index].GetLower_right_longitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_x") == 0)
+  {
+    return (images[index].GetLower_right_x() > *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_y") == 0)
+  {
+    return (images[index].GetLower_right_y() > *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_latitude") == 0)
+  {
+    return (images[index].GetMaximum_latitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_longitude") == 0)
+  {
+    return (images[index].GetMaximum_longitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_x") == 0)
+  {
+    return (images[index].GetMaximum_x() > *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_y") == 0)
+  {
+    return (images[index].GetMaximum_y() > *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_latitude") == 0)
+  {
+    return (images[index].GetMinimum_latitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_longitude") == 0)
+  {
+    return (images[index].GetMinimum_longitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_x") == 0)
+  {
+    return (images[index].GetMinimum_x() > *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_y") == 0)
+  {
+    return (images[index].GetMinimum_y() > *static_cast<double *>(value));
+  }
   if(field.compare("name") == 0)
   {
     return (images[index].GetName() > *static_cast<string *>(value));
@@ -208,13 +352,45 @@ bool SearchImages::GreaterThanComparison(vector <Images> &images, int index, str
   {
     return (images[index].GetUpdated_at() > *static_cast<string *>(value));
   }
+  if(field.compare("upper_left_corner_x_status") == 0)
+  {
+    return (images[index].GetUpper_left_corner_x_status() > *static_cast<string *>(value));
+  }
+  if(field.compare("upper_left_corner_y_status") == 0)
+  {
+    return (images[index].GetUpper_left_corner_y_status() > *static_cast<string *>(value));
+  }
+  if(field.compare("upper_left_latitude") == 0)
+  {
+    return (images[index].GetUpper_left_latitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("upper_left_longitude") == 0)
+  {
+    return (images[index].GetUpper_left_longitude() > *static_cast<double *>(value));
+  }
   if(field.compare("upper_left_x") == 0)
   {
-    return (images[index].GetUpper_left_x() > *static_cast<string *>(value));
+    return (images[index].GetUpper_left_x() > *static_cast<double *>(value));
   }
   if(field.compare("upper_left_y") == 0)
   {
-    return (images[index].GetUpper_left_y() > *static_cast<string *>(value));
+    return (images[index].GetUpper_left_y() > *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_latitude") == 0)
+  {
+    return (images[index].GetUpper_right_latitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_longitude") == 0)
+  {
+    return (images[index].GetUpper_right_longitude() > *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_x") == 0)
+  {
+    return (images[index].GetUpper_right_x() > *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_y") == 0)
+  {
+    return (images[index].GetUpper_right_y() > *static_cast<double *>(value));
   }
   if(field.compare("vertical_resolution") == 0)
   {
@@ -224,45 +400,29 @@ bool SearchImages::GreaterThanComparison(vector <Images> &images, int index, str
   {
     return (images[index].GetWidth() > *static_cast<int *>(value));
   }
-  if(field.compare("x_high") == 0)
-  {
-    return (images[index].GetX_high() > *static_cast<double *>(value));
-  }
-  if(field.compare("x_low") == 0)
-  {
-    return (images[index].GetX_low() > *static_cast<double *>(value));
-  }
   if(field.compare("x_offset") == 0)
   {
     return (images[index].GetX_offset() > *static_cast<double *>(value));
-  }
-  if(field.compare("x_origin") == 0)
-  {
-    return (images[index].GetX_origin() > *static_cast<double *>(value));
   }
   if(field.compare("x_relative") == 0)
   {
     return (images[index].GetX_relative() > *static_cast<double *>(value));
   }
-  if(field.compare("y_high") == 0)
+  if(field.compare("x_shift") == 0)
   {
-    return (images[index].GetY_high() > *static_cast<double *>(value));
-  }
-  if(field.compare("y_low") == 0)
-  {
-    return (images[index].GetY_low() > *static_cast<double *>(value));
+    return (images[index].GetX_shift() > *static_cast<double *>(value));
   }
   if(field.compare("y_offset") == 0)
   {
     return (images[index].GetY_offset() > *static_cast<double *>(value));
   }
-  if(field.compare("y_origin") == 0)
-  {
-    return (images[index].GetY_origin() > *static_cast<double *>(value));
-  }
   if(field.compare("y_relative") == 0)
   {
     return (images[index].GetY_relative() > *static_cast<double *>(value));
+  }
+  if(field.compare("y_shift") == 0)
+  {
+    return (images[index].GetY_shift() > *static_cast<double *>(value));
   }
 
   return false;
@@ -309,6 +469,70 @@ bool SearchImages::LessThanComparison(vector <Images> &images, int index, string
   {
     return (images[index].GetImage_set_id() < *static_cast<int *>(value));
   }
+  if(field.compare("lower_left_latitude") == 0)
+  {
+    return (images[index].GetLower_left_latitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_longitude") == 0)
+  {
+    return (images[index].GetLower_left_longitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_x") == 0)
+  {
+    return (images[index].GetLower_left_x() < *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_y") == 0)
+  {
+    return (images[index].GetLower_left_y() < *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_latitude") == 0)
+  {
+    return (images[index].GetLower_right_latitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_longitude") == 0)
+  {
+    return (images[index].GetLower_right_longitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_x") == 0)
+  {
+    return (images[index].GetLower_right_x() < *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_y") == 0)
+  {
+    return (images[index].GetLower_right_y() < *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_latitude") == 0)
+  {
+    return (images[index].GetMaximum_latitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_longitude") == 0)
+  {
+    return (images[index].GetMaximum_longitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_x") == 0)
+  {
+    return (images[index].GetMaximum_x() < *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_y") == 0)
+  {
+    return (images[index].GetMaximum_y() < *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_latitude") == 0)
+  {
+    return (images[index].GetMinimum_latitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_longitude") == 0)
+  {
+    return (images[index].GetMinimum_longitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_x") == 0)
+  {
+    return (images[index].GetMinimum_x() < *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_y") == 0)
+  {
+    return (images[index].GetMinimum_y() < *static_cast<double *>(value));
+  }
   if(field.compare("name") == 0)
   {
     return (images[index].GetName() < *static_cast<string *>(value));
@@ -341,13 +565,45 @@ bool SearchImages::LessThanComparison(vector <Images> &images, int index, string
   {
     return (images[index].GetUpdated_at() < *static_cast<string *>(value));
   }
+  if(field.compare("upper_left_corner_x_status") == 0)
+  {
+    return (images[index].GetUpper_left_corner_x_status() < *static_cast<string *>(value));
+  }
+  if(field.compare("upper_left_corner_y_status") == 0)
+  {
+    return (images[index].GetUpper_left_corner_y_status() < *static_cast<string *>(value));
+  }
+  if(field.compare("upper_left_latitude") == 0)
+  {
+    return (images[index].GetUpper_left_latitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("upper_left_longitude") == 0)
+  {
+    return (images[index].GetUpper_left_longitude() < *static_cast<double *>(value));
+  }
   if(field.compare("upper_left_x") == 0)
   {
-    return (images[index].GetUpper_left_x() < *static_cast<string *>(value));
+    return (images[index].GetUpper_left_x() < *static_cast<double *>(value));
   }
   if(field.compare("upper_left_y") == 0)
   {
-    return (images[index].GetUpper_left_y() < *static_cast<string *>(value));
+    return (images[index].GetUpper_left_y() < *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_latitude") == 0)
+  {
+    return (images[index].GetUpper_right_latitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_longitude") == 0)
+  {
+    return (images[index].GetUpper_right_longitude() < *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_x") == 0)
+  {
+    return (images[index].GetUpper_right_x() < *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_y") == 0)
+  {
+    return (images[index].GetUpper_right_y() < *static_cast<double *>(value));
   }
   if(field.compare("vertical_resolution") == 0)
   {
@@ -357,45 +613,29 @@ bool SearchImages::LessThanComparison(vector <Images> &images, int index, string
   {
     return (images[index].GetWidth() < *static_cast<int *>(value));
   }
-  if(field.compare("x_high") == 0)
-  {
-    return (images[index].GetX_high() < *static_cast<double *>(value));
-  }
-  if(field.compare("x_low") == 0)
-  {
-    return (images[index].GetX_low() < *static_cast<double *>(value));
-  }
   if(field.compare("x_offset") == 0)
   {
     return (images[index].GetX_offset() < *static_cast<double *>(value));
-  }
-  if(field.compare("x_origin") == 0)
-  {
-    return (images[index].GetX_origin() < *static_cast<double *>(value));
   }
   if(field.compare("x_relative") == 0)
   {
     return (images[index].GetX_relative() < *static_cast<double *>(value));
   }
-  if(field.compare("y_high") == 0)
+  if(field.compare("x_shift") == 0)
   {
-    return (images[index].GetY_high() < *static_cast<double *>(value));
-  }
-  if(field.compare("y_low") == 0)
-  {
-    return (images[index].GetY_low() < *static_cast<double *>(value));
+    return (images[index].GetX_shift() < *static_cast<double *>(value));
   }
   if(field.compare("y_offset") == 0)
   {
     return (images[index].GetY_offset() < *static_cast<double *>(value));
   }
-  if(field.compare("y_origin") == 0)
-  {
-    return (images[index].GetY_origin() < *static_cast<double *>(value));
-  }
   if(field.compare("y_relative") == 0)
   {
     return (images[index].GetY_relative() < *static_cast<double *>(value));
+  }
+  if(field.compare("y_shift") == 0)
+  {
+    return (images[index].GetY_shift() < *static_cast<double *>(value));
   }
 
   return false;
@@ -442,6 +682,70 @@ double SearchImages::Difference(vector <Images> &images, int index, string field
   {
     return static_cast<double>(images[index].GetImage_set_id() - *static_cast<int *>(value));
   }
+  if(field.compare("lower_left_latitude") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_left_latitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_longitude") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_left_longitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_x") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_left_x() - *static_cast<double *>(value));
+  }
+  if(field.compare("lower_left_y") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_left_y() - *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_latitude") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_right_latitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_longitude") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_right_longitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_x") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_right_x() - *static_cast<double *>(value));
+  }
+  if(field.compare("lower_right_y") == 0)
+  {
+    return static_cast<double>(images[index].GetLower_right_y() - *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_latitude") == 0)
+  {
+    return static_cast<double>(images[index].GetMaximum_latitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_longitude") == 0)
+  {
+    return static_cast<double>(images[index].GetMaximum_longitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_x") == 0)
+  {
+    return static_cast<double>(images[index].GetMaximum_x() - *static_cast<double *>(value));
+  }
+  if(field.compare("maximum_y") == 0)
+  {
+    return static_cast<double>(images[index].GetMaximum_y() - *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_latitude") == 0)
+  {
+    return static_cast<double>(images[index].GetMinimum_latitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_longitude") == 0)
+  {
+    return static_cast<double>(images[index].GetMinimum_longitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_x") == 0)
+  {
+    return static_cast<double>(images[index].GetMinimum_x() - *static_cast<double *>(value));
+  }
+  if(field.compare("minimum_y") == 0)
+  {
+    return static_cast<double>(images[index].GetMinimum_y() - *static_cast<double *>(value));
+  }
   if(field.compare("name") == 0)
   {
     return static_cast<double>(images[index].GetName().compare(*static_cast<string *>(value)));
@@ -474,13 +778,45 @@ double SearchImages::Difference(vector <Images> &images, int index, string field
   {
     return static_cast<double>(images[index].GetUpdated_at().compare(*static_cast<string *>(value)));
   }
+  if(field.compare("upper_left_corner_x_status") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_left_corner_x_status().compare(*static_cast<string *>(value)));
+  }
+  if(field.compare("upper_left_corner_y_status") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_left_corner_y_status().compare(*static_cast<string *>(value)));
+  }
+  if(field.compare("upper_left_latitude") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_left_latitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("upper_left_longitude") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_left_longitude() - *static_cast<double *>(value));
+  }
   if(field.compare("upper_left_x") == 0)
   {
-    return static_cast<double>(images[index].GetUpper_left_x().compare(*static_cast<string *>(value)));
+    return static_cast<double>(images[index].GetUpper_left_x() - *static_cast<double *>(value));
   }
   if(field.compare("upper_left_y") == 0)
   {
-    return static_cast<double>(images[index].GetUpper_left_y().compare(*static_cast<string *>(value)));
+    return static_cast<double>(images[index].GetUpper_left_y() - *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_latitude") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_right_latitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_longitude") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_right_longitude() - *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_x") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_right_x() - *static_cast<double *>(value));
+  }
+  if(field.compare("upper_right_y") == 0)
+  {
+    return static_cast<double>(images[index].GetUpper_right_y() - *static_cast<double *>(value));
   }
   if(field.compare("vertical_resolution") == 0)
   {
@@ -490,45 +826,29 @@ double SearchImages::Difference(vector <Images> &images, int index, string field
   {
     return static_cast<double>(images[index].GetWidth() - *static_cast<int *>(value));
   }
-  if(field.compare("x_high") == 0)
-  {
-    return static_cast<double>(images[index].GetX_high() - *static_cast<double *>(value));
-  }
-  if(field.compare("x_low") == 0)
-  {
-    return static_cast<double>(images[index].GetX_low() - *static_cast<double *>(value));
-  }
   if(field.compare("x_offset") == 0)
   {
     return static_cast<double>(images[index].GetX_offset() - *static_cast<double *>(value));
-  }
-  if(field.compare("x_origin") == 0)
-  {
-    return static_cast<double>(images[index].GetX_origin() - *static_cast<double *>(value));
   }
   if(field.compare("x_relative") == 0)
   {
     return static_cast<double>(images[index].GetX_relative() - *static_cast<double *>(value));
   }
-  if(field.compare("y_high") == 0)
+  if(field.compare("x_shift") == 0)
   {
-    return static_cast<double>(images[index].GetY_high() - *static_cast<double *>(value));
-  }
-  if(field.compare("y_low") == 0)
-  {
-    return static_cast<double>(images[index].GetY_low() - *static_cast<double *>(value));
+    return static_cast<double>(images[index].GetX_shift() - *static_cast<double *>(value));
   }
   if(field.compare("y_offset") == 0)
   {
     return static_cast<double>(images[index].GetY_offset() - *static_cast<double *>(value));
   }
-  if(field.compare("y_origin") == 0)
-  {
-    return static_cast<double>(images[index].GetY_origin() - *static_cast<double *>(value));
-  }
   if(field.compare("y_relative") == 0)
   {
     return static_cast<double>(images[index].GetY_relative() - *static_cast<double *>(value));
+  }
+  if(field.compare("y_shift") == 0)
+  {
+    return static_cast<double>(images[index].GetY_shift() - *static_cast<double *>(value));
   }
 
   return false;
