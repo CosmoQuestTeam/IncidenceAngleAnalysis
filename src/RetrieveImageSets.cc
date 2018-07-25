@@ -29,7 +29,7 @@ void RetrieveImageSets::Display(vector <ImageSets> &list)
   /********************/
   /* Print header row */
   /********************/
-  printf("%-2s %-12s %-3s %8s %8s %8s %8s %8s %8s %8s %8s %-7s %4s %6s %6s %6s %6s %9s %9s\n", 
+  printf("%-2s %-12s %-3s %8s %8s %8s %8s %8s %8s %8s %8s %-7s %4s %9s %9s\n", 
 	 "ID",
 	 "NAME",
 	 "AID",
@@ -43,10 +43,6 @@ void RetrieveImageSets::Display(vector <ImageSets> &list)
 	 "LLLONG",
 	 "DETAILS", 
 	 "PR",
-	 "HR",
-	 "VR",
-	 "HLC",
-	 "VLC",
 	 "ULXSTATUS", 
 	 "ULYSTATUS");
   
@@ -55,7 +51,7 @@ void RetrieveImageSets::Display(vector <ImageSets> &list)
   /********************/
   nelements = (int)list.size();
   for(int i=0; i<nelements; i++)
-    printf("%-2d %-12s %-3d %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %-7.7s %4.2lf %6.4lf %6.4lf %6.4lf %6.4lf %9s %9s\n", 
+    printf("%-2d %-12s %-3d %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %8.4lf %-7.7s %4.2lf %9s %9s\n", 
 	   list[i].GetId(), 
 	   list[i].GetName().c_str(), 
 	   list[i].GetApplication_id(), 
@@ -69,10 +65,6 @@ void RetrieveImageSets::Display(vector <ImageSets> &list)
 	   list[i].GetLower_left_longitude(),
 	   list[i].GetDetails().c_str(),
 	   list[i].GetPixel_resolution(), 
-	   list[i].GetHorizontal_resolution(),
-	   list[i].GetVertical_resolution(),
-	   list[i].GetHorizontal_latitudinal_change(),
-	   list[i].GetVertical_longitudinal_change(),
 	   list[i].GetUpper_left_corner_x_status().c_str(), 
 	   list[i].GetUpper_left_corner_y_status().c_str());
 

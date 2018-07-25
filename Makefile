@@ -8,9 +8,9 @@ SRCDIR = $(TOPDIR)src
 SOURCES := $(wildcard $(SRCDIR)/*.cc)
 OBJECTS := $(patsubst $(SRCDIR)/%.cc,$(OBJDIR)/%.o,$(SOURCES))
 EXECUTABLE1 := $(BINDIR)/IncidenceAngleAnalysis
-EXE1_OBJS := $(OBJDIR)/Checkpoint.o $(OBJDIR)/EquirectangularProjection.o $(OBJDIR)/Images.o $(OBJDIR)/ImageSets.o $(OBJDIR)/IncidenceAngleAnalysis.o $(OBJDIR)/IncidenceAngles.o $(OBJDIR)/MySQLConnection.o $(OBJDIR)/OverlappedImages.o $(OBJDIR)/Plot.o $(OBJDIR)/ProjectiveTransformation.o $(OBJDIR)/ReadAuxilaryData.o $(OBJDIR)/RetrieveImages.o $(OBJDIR)/RetrieveImageSets.o $(OBJDIR)/SearchImages.o $(OBJDIR)/SortImages.o $(OBJDIR)/SortImageSets.o $(OBJDIR)/Utilities.o
+EXE1_OBJS := $(OBJDIR)/CheckOverlap.o $(OBJDIR)/Checkpoint.o $(OBJDIR)/EquirectangularProjection.o $(OBJDIR)/Images.o $(OBJDIR)/ImageSets.o $(OBJDIR)/IncidenceAngleAnalysis.o $(OBJDIR)/IncidenceAngles.o $(OBJDIR)/Marks.o $(OBJDIR)/MySQLConnection.o $(OBJDIR)/OverlappedImages.o $(OBJDIR)/Plot.o $(OBJDIR)/ProjectiveTransformation.o $(OBJDIR)/Quadrilateral.o $(OBJDIR)/ReadAuxilaryData.o $(OBJDIR)/RetrieveImages.o $(OBJDIR)/RetrieveImageSets.o $(OBJDIR)/RetrieveMarks.o $(OBJDIR)/SearchImages.o $(OBJDIR)/SearchIncidenceAngles.o $(OBJDIR)/SearchMarks.o $(OBJDIR)/SortImages.o $(OBJDIR)/SortImageSets.o $(OBJDIR)/SortIncidenceAngles.o $(OBJDIR)/SortMarks.o $(OBJDIR)/SortOverlappedImages.o $(OBJDIR)/SphericalLawofCosines.o $(OBJDIR)/Utilities.o
 
-#EXE1_OBJS := $(OBJDIR)/Circle.o $(OBJDIR)/EquirectangularProjection.o $(OBJDIR)/MySQLConnection.o $(OBJDIR)/Marks.o $(OBJDIR)/MasterImageOrientation.o  $(OBJDIR)/PixelResolution.o $(OBJDIR)/Rectangle.o  $(OBJDIR)/RetrieveImageSets.o $(OBJDIR)/RetrieveMarks.o $(OBJDIR)/SearchIncidenceAngles.o $(OBJDIR)/SearchMarks.o $(OBJDIR)/SortIncidenceAngles.o $(OBJDIR)/SortMasterImageOrientation.o $(OBJDIR)/SortMarks.o $(OBJDIR)/SortOverlappedImages.o $(OBJDIR)/SortPixelResolutions.o $(OBJDIR)/Utilities.o
+#EXE1_OBJS := $(OBJDIR)/Circle.o    
 
 CC = g++
 CFLAGS = -g -Wshadow -Wall -Wextra -O3 -march=native -mavx -std=c++11

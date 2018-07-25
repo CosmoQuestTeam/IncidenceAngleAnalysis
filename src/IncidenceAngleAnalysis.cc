@@ -6,11 +6,13 @@
 #include "ImageSets.h"
 #include "IncidenceAngles.h"
 #include "MySQLConnection.h"
+#include "Marks.h"
 #include "OverlappedImages.h"
 #include "Plot.h"
 #include "ReadAuxilaryData.h"
 #include "RetrieveImages.h"
 #include "RetrieveImageSets.h"
+#include "RetrieveMarks.h"
 
 using namespace sql;
 using namespace std;
@@ -24,6 +26,8 @@ int main(int argc, char *argv[])
   string auxilarydatafile;
   string buffer;
   string database;
+  string datafile1;
+  string datafile2;
   string field;
   string password;
   string option;
@@ -35,30 +39,50 @@ int main(int argc, char *argv[])
   vector <Images> images;
   vector <ImageSets> imagesets;
   vector <IncidenceAngles> incidenceangles;
-  //vector <Marks> marks;
-  //vector <MasterImageOrientation> masterimageorientations;
-  //vector <OverlappedImages> DIATotalOverlapImages;
-  //vector <OverlappedImages> overlappedimages;
+  vector <Marks> marks;
+  vector <OverlappedImages> different_incidence_angle_overlappedimages;
+  vector <OverlappedImages> overlappedimages;
   //vector <OverlappedImages> TotalOverlapImages;
-  //vector <OverlappedImages> SSDIATotalOverlapImages;
-  //vector <PixelResolution> pixelresolutions;
+  vector <OverlappedImages> scale_0_different_incidence_angle_overlappedimages;
   //vector <string> UnmarkedImages;
 
   /***********************/
   /* Retrieve arguements */
   /***********************/
-  if(argc != 2)
+  if(argc == 2)
+    auxilarydatafile = argv[1];
+  else if(argc == 3)
   {
-    printf("Invalid number of arguements. USAGE: %s [Auxilary datafile]\n", argv[0]);
+    datafile1 = argv[1];
+    datafile2 = argv[2];
+  }
+  else
+  {
+    printf("Invalid number of arguements.\nUSAGE 1: %s [Auxilary datafile]\nUSAGE 2: %s [Reduced crater catalog file 1] [Reduced crater catalog file 2]\n", argv[0], argv[0]);
     exit(EXIT_FAILURE);
   }
-  auxilarydatafile = argv[1];
 
   /*************************/
   /* Initialize checkpoint */
   /*************************/
   Checkpoint myCheckpoint;
 
+  if(argc == 3)
+  {
+    /*************************************************/
+    /* Cumulative Frequency versus Size Distribution */
+    /*************************************************/
+    Plot::CumulativeFrequencySizeDistribution(datafile1, datafile2);
+
+    /**************/
+    /* Checkpoint */
+    /**************/
+    buffer = "Elapsed time to plot cumulative frequency versus size distributions:";
+    myCheckpoint.ElapsedTime(buffer);
+    
+    return 0;
+  }
+  
   /*********************************/
   /* Parameters for MySQL database */
   /*********************************/
@@ -124,33 +148,33 @@ int main(int argc, char *argv[])
   buffer = "Elapsed time to retrieve images table from CosmoQuest mysql database:";
   myCheckpoint.ElapsedTime(buffer);
   
-  // /***********************************************************/
-  // /* Retrieve marks datatable from CosmoQuest MySQL database */
-  // /***********************************************************/
-  // table = "marks";
-  // field = "id, image_id, application_id, x, y, diameter";
-  // option = "";
-  // RetrieveMarks myMarks(conn, table, field, option);
-  // myMarks.Fetch();
-  // marks = myMarks.GetData();
-  // //RetrieveMarks::Display(marks); exit(0);
+  /***********************************************************/
+  /* Retrieve marks datatable from CosmoQuest MySQL database */
+  /***********************************************************/
+  table = "marks";
+  field = "id, image_id, application_id, x, y, diameter";
+  option = "";
+  RetrieveMarks myMarks(conn, table, field, option);
+  myMarks.Fetch();
+  marks = myMarks.GetData();
+  //RetrieveMarks::Display(marks); exit(0);
 
-  // /**************/
-  // /* Checkpoint */
-  // /**************/
-  // buffer = "Elapsed time to retrieve marks table from CosmoQuest mysql database:";
-  // myCheckpoint.ElapsedTime(buffer);
+  /**************/
+  /* Checkpoint */
+  /**************/
+  buffer = "Elapsed time to retrieve marks table from CosmoQuest mysql database:";
+  myCheckpoint.ElapsedTime(buffer);
 
-  // /***********************************************/
-  // /* End connection to CosmoQuest MySQL database */
-  // /***********************************************/
-  // myConnection.Disconnect();
+  /***********************************************/
+  /* End connection to CosmoQuest MySQL database */
+  /***********************************************/
+  myConnection.Disconnect();
 
-  // /**************/
-  // /* Checkpoint */
-  // /**************/
-  // buffer = "Elapsed time to end connection to CosmoQuest mysql database:";
-  // myCheckpoint.ElapsedTime(buffer);
+  /**************/
+  /* Checkpoint */
+  /**************/
+  buffer = "Elapsed time to end connection to CosmoQuest mysql database:";
+  myCheckpoint.ElapsedTime(buffer);
 
   /******************************************************/
   /* Retrieve auxilary data from user supplied datafile */
@@ -175,7 +199,7 @@ int main(int argc, char *argv[])
   /**************/
   /* Checkpoint */
   /**************/
-  buffer = "Elapsed time to execute imagesets auxilary functions:";
+  buffer = "Elapsed time to execute imagesets auxilary function:";
   myCheckpoint.ElapsedTime(buffer);
 
   /*************************************/
@@ -187,99 +211,43 @@ int main(int argc, char *argv[])
   /**************/
   /* Checkpoint */
   /**************/
-  buffer = "Elapsed time to execute images auxilary functions:";
+  buffer = "Elapsed time to execute images auxilary function:";
   myCheckpoint.ElapsedTime(buffer);
 
-  /*******************/
-  /* Sanity Checking */
-  /*******************/
-  int wanted_index = 0;
-  Plot::MasterImage(imagesets[0]);
-  Plot::MasterImage_w_SubImages(imagesets[0], images);
-  for(int i=0; i<(int)images.size(); i++)
-    if(images[i].GetName().compare("M109215691LE_0_9") == 0)
-    {
-      Plot::SubImage(images[i], true, true);
-      wanted_index = i;
-      break;
-    }
-  double wanted_x = images[wanted_index].GetX_relative();
-  double wanted_y = images[wanted_index].GetY_relative();
-  double wanted_width = images[wanted_index].GetWidth();
-  double wanted_height = images[wanted_index].GetHeight();
-  printf("Corner 1: %lf pixels in x and %lf pixels in y\n", wanted_x, wanted_y);
-  printf("Corner 2: %lf pixels in x and %lf pixels in y\n", wanted_x+wanted_width, wanted_y);
-  printf("Corner 3: %lf pixels in x and %lf pixels in y\n", wanted_x+wanted_width, wanted_y+wanted_height);
-  printf("Corner 4: %lf pixels in x and %lf pixels in y\n", wanted_x, wanted_y+wanted_height);
-  
-  ProjectiveTransformation wanted_pt = images[wanted_index].GetProjective_transformation();
-  vector <double> wanted_coords(2);
-  //wanted_pt.PrintSourceCoordinates();
-  //wanted_pt.PrintTargetCoordinates(); exit(0);
-  wanted_coords = wanted_pt.ComputeTarget2SourceCoordinates(wanted_x, wanted_y);
-  printf("Corner 1: %lf degrees longitude and %lf degrees latitude\n", wanted_coords[0], wanted_coords[1]);
-  wanted_coords = wanted_pt.ComputeTarget2SourceCoordinates(wanted_x+wanted_width, wanted_y);
-  printf("Corner 2: %lf degrees longitude and %lf degrees latitude\n", wanted_coords[0], wanted_coords[1]);
-  wanted_coords = wanted_pt.ComputeTarget2SourceCoordinates(wanted_x+wanted_width, wanted_y+wanted_height);
-  printf("Corner 3: %lf degrees longitude and %lf degrees latitude\n", wanted_coords[0], wanted_coords[1]);
-  wanted_coords = wanted_pt.ComputeTarget2SourceCoordinates(wanted_x, wanted_y+wanted_height);
-  printf("Corner 4: %lf degrees longitude and %lf degrees latitude\n", wanted_coords[0], wanted_coords[1]);
-  // // for(int i=0; i<(int)imagesets.size(); i++)
-  // // {
-  // //   cout << i << " " << imagesets[i].GetName() << endl;
-  // // } exit(0);
-  // //Plot::MasterImage_w_Craters(imagesets[1], images, marks);
-  // //Plot::MasterImage_w_Craters(imagesets[6], images, marks);
-  // //exit(0);
-  // //cout << imagesets[7].GetName() << " " << imagesets[8].GetName() << endl; exit(0);
-  // Plot::MasterImages(imagesets[7], imagesets[8]); exit(0);
-  // Plot::MasterImage_w_SubImages(imagesets[7], images); exit(0);
-  // Plot::MasterImage_w_SubImages(imagesets[8], images); exit(0);
-  // // for(int i=0; i<(int)imagesets.size(); i++)
-  // //   Plot::MasterImage_w_SubImages(imagesets[i], images);
-  // // for(int i=0; i<(int)images.size(); i++)
-  // //   Plot::SubImage_w_craters(images[i], marks);
-  // // int index1 = -1;
-  // // int index2 = -1;
-  // // for(int i=0; i<(int)images.size(); i++)
-  // // {
-  // //   if(images[i].GetName().compare("M115008450LE_0_540") == 0)
-  // //     index1 = i;
-  // //   if(images[i].GetName().compare("M138602853LE_0_1694") == 0)
-  // //     index2 = i;
-  // //   if((index1 != -1) && (index2 != -1))
-  // // 	  break;
-  // // }
-  // // Plot::SubImages(images[index1], images[index2]); exit(0);
-
-  // /**************/
-  // /* Checkpoint */
-  // /**************/
-  // buffer = "Elapsed time to perform sanity check:";
-  // myCheckpoint.ElapsedTime(buffer);
-
-  /*************************************/
-  /* Determine unique incidence angles */
-  /*************************************/
-  // unique_incidenceangles = Utilities::RetrieveUniqueIncidenceAngles(incidenceangles);
+  /************************************/
+  /* Execute marks auxilary functions */
+  /************************************/
+  Utilities::ExecuteMarksAuxilaryFunction(marks, images);
+  //RetrieveMarks::Display(marks); exit(0);
 
   /**************/
   /* Checkpoint */
   /**************/
-  // buffer = "Elapsed time to determine unique incidence angles:";
-  // myCheckpoint.ElapsedTime(buffer);
+  buffer = "Elapsed time to execute marks auxilary function:";
+  myCheckpoint.ElapsedTime(buffer);  
+
+  /*************************************/
+  /* Determine unique incidence angles */
+  /*************************************/
+  unique_incidenceangles = Utilities::RetrieveUniqueIncidenceAngles(incidenceangles);
+
+  /**************/
+  /* Checkpoint */
+  /**************/
+  buffer = "Elapsed time to determine unique incidence angles:";
+  myCheckpoint.ElapsedTime(buffer);
 
   /***********************************/
   /* Identify overlapping sub-images */
   /***********************************/
-  // overlappedimages = Utilities::FindOverlappingImages(images, incidenceangles, masterimageorientations);
+  overlappedimages = Utilities::FindOverlappingImages(images, incidenceangles);
   //OverlappedImages::Display(overlappedimages); exit(0);
 
   /**************/
   /* Checkpoint */
   /**************/
-  // buffer = "Elapsed time to identify overlapping images:";
-  // myCheckpoint.ElapsedTime(buffer);
+  buffer = "Elapsed time to identify overlapping images:";
+  myCheckpoint.ElapsedTime(buffer);
 
   // /*****************************************/
   // /* Identify total overlapping sub-images */
@@ -293,59 +261,46 @@ int main(int argc, char *argv[])
   // buffer = "Elapsed time to identify all total overlapped images:";
   // myCheckpoint.ElapsedTime(buffer);
 
-  // /**************************************************************************/
-  // /* Identify total overlapping sub-images with difference incidence angles */
-  // /**************************************************************************/
-  // DIATotalOverlapImages = Utilities::FindDifferentIncidenceAngleOverlappingImages(TotalOverlapImages);
-  // //OverlappedImages::Display(DIATotalOverlapImages); exit(0);
+  /********************************************************************/
+  /* Identify overlapping sub-images with difference incidence angles */
+  /********************************************************************/
+  different_incidence_angle_overlappedimages = Utilities::FindDifferentIncidenceAngleOverlappingImages(overlappedimages);
+  //OverlappedImages::Display(different_incidence_angle_overlappedimages); exit(0);
 
-  // /**************/
-  // /* Checkpoint */
-  // /**************/
-  // buffer = "Elapsed time to identify total overlapping images with different incidence angles:";
-  // myCheckpoint.ElapsedTime(buffer);
+  /**************/
+  /* Checkpoint */
+  /**************/
+  buffer = "Elapsed time to identify overlapping images with different incidence angles:";
+  myCheckpoint.ElapsedTime(buffer);
 
-  // /**********************************************************************************************/
-  // /* Identify total overlapping sub-images with difference incidence angles at the same "scale" */
-  // /**********************************************************************************************/
-  // SSDIATotalOverlapImages = Utilities::FindSameScaleOverlappingImages(DIATotalOverlapImages, 0);
-  // //OverlappedImages::Display(SSDIATotalOverlapImages); exit(0);
+  /****************************************************************************************/
+  /* Identify overlapping sub-images with difference incidence angles at the same "scale" */
+  /****************************************************************************************/
+  scale_0_different_incidence_angle_overlappedimages = Utilities::FindSameScaleOverlappingImages(different_incidence_angle_overlappedimages, 0);
+  //OverlappedImages::Display(scale_0_different_incidence_angle_overlappedimages); exit(0);
 
-  // /**************/
-  // /* Checkpoint */
-  // /**************/
-  // buffer = "Elapsed time to identify total overlapping images with different incidence angles that are at the same scale:";
-  // myCheckpoint.ElapsedTime(buffer);
+  /**************/
+  /* Checkpoint */
+  /**************/
+  buffer = "Elapsed time to identify overlapping images with different incidence angles that are at the same scale:";
+  myCheckpoint.ElapsedTime(buffer);
 
-  // /***************************************************************************************/
-  // /* Sanity check (Checking to see if algorithm is correctly identifying overlap region) */
-  // /***************************************************************************************/
-  // int myindex = 0;
-  // Plot::PlotOverlap(SSDIATotalOverlapImages[myindex]);
-  // OverlappedImages::Display(SSDIATotalOverlapImages[myindex]); exit(0);
-
-  // /********************************************/
-  // /* Plotting algorithm still in construction */
-  // /********************************************/
-  // //Plot::IncidenceAngleStatistics(82.82, 76.48, 0, SameScaleOverlapImages, marks);
-
-  // /**************/
-  // /* Checkpoint */
-  // /**************/
-  // // buffer = "Elapsed time to make most important plot:";
-  // // myCheckpoint.ElapsedTime(buffer);
-
-  // /********************************************************/
-  // /* Print all marks associated with a specific incidence */
-  // /* angle to screen or to file (crater catalog creation) */
-  // /********************************************************/
-  // //Utilities::PrintNACMarks(76.48, 0, incidenceangles, imagesets, images, marks, true);
-
-  // /**************/
-  // /* Checkpoint */
-  // /**************/
-  // buffer = "Elapsed time to retrieve marks for at a specific incidence angle:";
-  // //myCheckpoint.ElapsedTime(buffer);
-
+  /************************************************************************************/
+  /* Retrieve marks from overlapping regions for a pair of different incidence angles */
+  /************************************************************************************/
+  Utilities::PrintCraterCatalog(27.56, 58.21, incidenceangles, scale_0_different_incidence_angle_overlappedimages, marks, true);
+  
+  // Possible candidate 1: 27.56, 58.21
+  // Possible candidate 2: 27.56, 82.82
+  // Possible candidate 3: 27.56, 57.18
+  // Possible candidate 4: 27.56, 59.46
+  // Possible candidate 5: 27.56, 35.07
+  
+  /**************/
+  /* Checkpoint */
+  /**************/
+  buffer = "Elapsed time to retrieve marks contained within wanted overlapping images:";
+  myCheckpoint.ElapsedTime(buffer);
+    
   return 0;
 }

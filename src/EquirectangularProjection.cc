@@ -11,7 +11,7 @@ double EquirectangularProjection::CalculateLongitude(double x, double phi_1, dou
 }
 
 double EquirectangularProjection::CalculateX(double lambda, double lambda_0, double phi_1, double r)
-{
+{ 
   return r*(lambda-lambda_0)*cos(phi_1);
 }
 

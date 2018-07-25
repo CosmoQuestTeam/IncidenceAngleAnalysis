@@ -38,11 +38,6 @@ bool SortImages::cmp_by_height(Images &a, Images &b)
   return (a.GetHeight() < b.GetHeight());
 }
 
-bool SortImages::cmp_by_horizontal_resolution(Images &a, Images &b)
-{
-  return (a.GetHorizontal_resolution() < b.GetHorizontal_resolution());
-}
-
 bool SortImages::cmp_by_id(Images &a, Images &b)
 {
   return (a.GetId() < b.GetId());
@@ -93,24 +88,49 @@ bool SortImages::cmp_by_lower_right_y(Images &a, Images &b)
   return (a.GetLower_right_y() < b.GetLower_right_y());
 }
 
+bool SortImages::cmp_by_maximum_latitude(Images &a, Images &b)
+{
+  return (a.GetMaximum_latitude() < b.GetMaximum_latitude());
+}
+
+bool SortImages::cmp_by_maximum_longitude(Images &a, Images &b)
+{
+  return (a.GetMaximum_longitude() < b.GetMaximum_longitude());
+}
+
+bool SortImages::cmp_by_maximum_x(Images &a, Images &b)
+{
+  return (a.GetMaximum_x() < b.GetMaximum_x());
+}
+
+bool SortImages::cmp_by_maximum_y(Images &a, Images &b)
+{
+  return (a.GetMaximum_y() < b.GetMaximum_y());
+}
+
+bool SortImages::cmp_by_minimum_latitude(Images &a, Images &b)
+{
+  return (a.GetMinimum_latitude() < b.GetMinimum_latitude());
+}
+
+bool SortImages::cmp_by_minimum_longitude(Images &a, Images &b)
+{
+  return (a.GetMinimum_longitude() < b.GetMinimum_longitude());
+}
+
+bool SortImages::cmp_by_minimum_x(Images &a, Images &b)
+{
+  return (a.GetMinimum_x() < b.GetMinimum_x());
+}
+
+bool SortImages::cmp_by_minimum_y(Images &a, Images &b)
+{
+  return (a.GetMinimum_y() < b.GetMinimum_y());
+}
+
 bool SortImages::cmp_by_name(Images &a, Images &b)
 {
   return (a.GetName() < b.GetName());
-}
-
-bool SortImages::cmp_by_physical_height(Images &a, Images &b)
-{
-  return (a.GetPhysical_height() < b.GetPhysical_height());
-}
-
-bool SortImages::cmp_by_physical_width(Images &a, Images &b)
-{
-  return (a.GetPhysical_width() < b.GetPhysical_width());
-}
-
-bool SortImages::cmp_by_pixel_resolution(Images &a, Images &b)
-{
-  return (a.GetPixel_resolution() < b.GetPixel_resolution());
 }
 
 bool SortImages::cmp_by_premarked(Images &a, Images &b)
@@ -183,19 +203,9 @@ bool SortImages::cmp_by_upper_right_y(Images &a, Images &b)
   return (a.GetUpper_right_y() < b.GetUpper_right_y());
 }
 
-bool SortImages::cmp_by_vertical_resolution(Images &a, Images &b)
-{
-  return (a.GetVertical_resolution() < b.GetVertical_resolution());
-}
-
 bool SortImages::cmp_by_width(Images &a, Images &b)
 {
   return (a.GetWidth() < b.GetWidth());
-}
-
-bool SortImages::cmp_by_x_offset(Images &a, Images &b)
-{
-  return (a.GetX_offset() < b.GetX_offset());
 }
 
 bool SortImages::cmp_by_x_relative(Images &a, Images &b)
@@ -203,24 +213,9 @@ bool SortImages::cmp_by_x_relative(Images &a, Images &b)
   return (a.GetX_relative() < b.GetX_relative());
 }
 
-bool SortImages::cmp_by_x_shift(Images &a, Images &b)
-{
-  return (a.GetX_shift() < b.GetX_shift());
-}
-
-bool SortImages::cmp_by_y_offset(Images &a, Images &b)
-{
-  return (a.GetY_offset() < b.GetY_offset());
-}
-
 bool SortImages::cmp_by_y_relative(Images &a, Images &b)
 {
   return (a.GetY_relative() < b.GetY_relative());
-}
-
-bool SortImages::cmp_by_y_shift(Images &a, Images &b)
-{
-  return (a.GetY_shift() < b.GetY_shift());
 }
 
 int SortImages::GetFieldValue()
@@ -252,153 +247,149 @@ int SortImages::GetFieldValue()
   {
     return 6;
   }
-  if(field.compare("horizontal_resolution") == 0)
+  if(field.compare("id") == 0)
   {
     return 7;
   }
-  if(field.compare("id") == 0)
+  if(field.compare("image_set_id") == 0)
   {
     return 8;
   }
-  if(field.compare("image_set_id") == 0)
+  if(field.compare("lower_left_latitude") == 0)
   {
     return 9;
   }
-  if(field.compare("lower_left_latitude") == 0)
+  if(field.compare("lower_left_longitude") == 0)
   {
     return 10;
   }
-  if(field.compare("lower_left_longitude") == 0)
+  if(field.compare("lower_left_x") == 0)
   {
     return 11;
   }
-  if(field.compare("lower_left_x") == 0)
+  if(field.compare("lower_left_y") == 0)
   {
     return 12;
   }
-  if(field.compare("lower_left_y") == 0)
+  if(field.compare("lower_right_latitude") == 0)
   {
     return 13;
   }
-  if(field.compare("lower_right_latitude") == 0)
+  if(field.compare("lower_right_longitude") == 0)
   {
     return 14;
   }
-  if(field.compare("lower_right_longitude") == 0)
+  if(field.compare("lower_right_x") == 0)
   {
     return 15;
   }
-  if(field.compare("lower_right_x") == 0)
+  if(field.compare("lower_right_y") == 0)
   {
     return 16;
   }
-  if(field.compare("lower_right_y") == 0)
+  if(field.compare("maximum_latitude") == 0)
   {
     return 17;
   }
-  if(field.compare("name") == 0)
+  if(field.compare("maximum_longitude") == 0)
   {
     return 18;
   }
-  if(field.compare("physical_height") == 0)
+  if(field.compare("maximum_x") == 0)
   {
     return 19;
   }
-  if(field.compare("physical_width") == 0)
+  if(field.compare("maximum_y") == 0)
   {
     return 20;
   }
-  if(field.compare("pixel_resolution") == 0)
+  if(field.compare("minimum_latitude") == 0)
   {
     return 21;
   }
-  if(field.compare("premarked") == 0)
+  if(field.compare("minimum_longitude") == 0)
   {
     return 22;
   }
-  if(field.compare("priority") == 0)
+  if(field.compare("minimum_x") == 0)
   {
     return 23;
   }
-  if(field.compare("sun_angle") == 0)
+  if(field.compare("minimum_y") == 0)
   {
     return 24;
-  }  
-  if(field.compare("updated_at") == 0)
+  }
+  if(field.compare("name") == 0)
   {
     return 25;
   }
-  if(field.compare("upper_left_corner_x_status") == 0)
+  if(field.compare("premarked") == 0)
   {
     return 26;
   }
-  if(field.compare("upper_left_corner_y_status") == 0)
+  if(field.compare("priority") == 0)
   {
     return 27;
   }
-  if(field.compare("upper_left_latitude") == 0)
+  if(field.compare("sun_angle") == 0)
   {
     return 28;
-  }
-  if(field.compare("upper_left_longitude") == 0)
+  }  
+  if(field.compare("updated_at") == 0)
   {
     return 29;
   }
-  if(field.compare("upper_left_x") == 0)
+  if(field.compare("upper_left_corner_x_status") == 0)
   {
     return 30;
   }
-  if(field.compare("upper_left_y") == 0)
+  if(field.compare("upper_left_corner_y_status") == 0)
   {
     return 31;
   }
-  if(field.compare("upper_right_latitude") == 0)
+  if(field.compare("upper_left_latitude") == 0)
   {
     return 32;
   }
-  if(field.compare("upper_right_longitude") == 0)
+  if(field.compare("upper_left_longitude") == 0)
   {
     return 33;
   }
-  if(field.compare("upper_right_x") == 0)
+  if(field.compare("upper_left_x") == 0)
   {
     return 34;
   }
-  if(field.compare("upper_right_y") == 0)
+  if(field.compare("upper_left_y") == 0)
   {
     return 35;
   }
-  if(field.compare("vertical_resolution") == 0)
+  if(field.compare("upper_right_latitude") == 0)
   {
     return 36;
   }
-  if(field.compare("width") == 0)
+  if(field.compare("upper_right_longitude") == 0)
   {
     return 37;
   }
-    if(field.compare("x_offset") == 0)
+  if(field.compare("upper_right_x") == 0)
   {
     return 38;
   }
-  if(field.compare("x_relative") == 0)
+  if(field.compare("upper_right_y") == 0)
   {
     return 39;
   }
-  if(field.compare("x_shift") == 0)
+  if(field.compare("width") == 0)
   {
     return 40;
   }
-  if(field.compare("y_offset") == 0)
+  if(field.compare("x_relative") == 0)
   {
     return 41;
   }
   if(field.compare("y_relative") == 0)
   {
     return 42;
-  }
-  if(field.compare("y_shift") == 0)
-  {
-    return 43;
   }
   
   return 0;
@@ -458,187 +449,182 @@ void SortImages::arrange()
     }
     case 7:
     {
-      sort(images.begin(), images.end(), cmp_by_horizontal_resolution);
+      sort(images.begin(), images.end(), cmp_by_id);
       break;
     }
     case 8:
     {
-      sort(images.begin(), images.end(), cmp_by_id);
+      sort(images.begin(), images.end(), cmp_by_image_set_id);
       break;
     }
     case 9:
     {
-      sort(images.begin(), images.end(), cmp_by_image_set_id);
+      sort(images.begin(), images.end(), cmp_by_lower_left_latitude);
       break;
     }
     case 10:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_left_latitude);
+      sort(images.begin(), images.end(), cmp_by_lower_left_longitude);
       break;
     }
     case 11:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_left_longitude);
+      sort(images.begin(), images.end(), cmp_by_lower_left_x);
       break;
     }
     case 12:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_left_x);
+      sort(images.begin(), images.end(), cmp_by_lower_left_y);
       break;
     }
     case 13:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_left_y);
+      sort(images.begin(), images.end(), cmp_by_lower_right_latitude);
       break;
     }
     case 14:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_right_latitude);
+      sort(images.begin(), images.end(), cmp_by_lower_right_longitude);
       break;
     }
     case 15:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_right_longitude);
+      sort(images.begin(), images.end(), cmp_by_lower_right_x);
       break;
     }
     case 16:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_right_x);
+      sort(images.begin(), images.end(), cmp_by_lower_right_y);
       break;
     }
     case 17:
     {
-      sort(images.begin(), images.end(), cmp_by_lower_right_y);
+      sort(images.begin(), images.end(), cmp_by_maximum_latitude);
       break;
     }
     case 18:
     {
-      sort(images.begin(), images.end(), cmp_by_name);
+      sort(images.begin(), images.end(), cmp_by_maximum_longitude);
       break;
     }
     case 19:
     {
-      sort(images.begin(), images.end(), cmp_by_physical_height);
+      sort(images.begin(), images.end(), cmp_by_maximum_x);
       break;
     }
     case 20:
     {
-      sort(images.begin(), images.end(), cmp_by_physical_width);
+      sort(images.begin(), images.end(), cmp_by_maximum_y);
       break;
     }
     case 21:
     {
-      sort(images.begin(), images.end(), cmp_by_pixel_resolution);
+      sort(images.begin(), images.end(), cmp_by_minimum_latitude);
       break;
     }
     case 22:
     {
-      sort(images.begin(), images.end(), cmp_by_premarked);
+      sort(images.begin(), images.end(), cmp_by_minimum_longitude);
       break;
     }
     case 23:
     {
-      sort(images.begin(), images.end(), cmp_by_priority);
+      sort(images.begin(), images.end(), cmp_by_minimum_x);
       break;
     }
     case 24:
     {
-      sort(images.begin(), images.end(), cmp_by_sun_angle);
+      sort(images.begin(), images.end(), cmp_by_minimum_y);
       break;
     }
     case 25:
     {
-      sort(images.begin(), images.end(), cmp_by_updated_at);
+      sort(images.begin(), images.end(), cmp_by_name);
       break;
     }
     case 26:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_left_corner_x_status);
+      sort(images.begin(), images.end(), cmp_by_premarked);
       break;
     }
     case 27:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_left_corner_y_status);
+      sort(images.begin(), images.end(), cmp_by_priority);
       break;
     }
     case 28:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_left_latitude);
+      sort(images.begin(), images.end(), cmp_by_sun_angle);
       break;
     }
     case 29:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_left_longitude);
+      sort(images.begin(), images.end(), cmp_by_updated_at);
       break;
     }
     case 30:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_left_x);
+      sort(images.begin(), images.end(), cmp_by_upper_left_corner_x_status);
       break;
     }
     case 31:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_left_y);
+      sort(images.begin(), images.end(), cmp_by_upper_left_corner_y_status);
       break;
     }
     case 32:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_right_latitude);
+      sort(images.begin(), images.end(), cmp_by_upper_left_latitude);
       break;
     }
     case 33:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_right_longitude);
+      sort(images.begin(), images.end(), cmp_by_upper_left_longitude);
       break;
     }
     case 34:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_right_x);
+      sort(images.begin(), images.end(), cmp_by_upper_left_x);
       break;
     }
     case 35:
     {
-      sort(images.begin(), images.end(), cmp_by_upper_right_y);
+      sort(images.begin(), images.end(), cmp_by_upper_left_y);
       break;
     }
     case 36:
     {
-      sort(images.begin(), images.end(), cmp_by_vertical_resolution);
+      sort(images.begin(), images.end(), cmp_by_upper_right_latitude);
       break;
     }
     case 37:
     {
-      sort(images.begin(), images.end(), cmp_by_width);
+      sort(images.begin(), images.end(), cmp_by_upper_right_longitude);
       break;
     }
     case 38:
     {
-      sort(images.begin(), images.end(), cmp_by_x_offset);
+      sort(images.begin(), images.end(), cmp_by_upper_right_x);
       break;
     }
     case 39:
     {
-      sort(images.begin(), images.end(), cmp_by_x_relative);
+      sort(images.begin(), images.end(), cmp_by_upper_right_y);
       break;
     }
     case 40:
     {
-      sort(images.begin(), images.end(), cmp_by_x_shift);
+      sort(images.begin(), images.end(), cmp_by_width);
       break;
     }
     case 41:
     {
-      sort(images.begin(), images.end(), cmp_by_y_offset);
+      sort(images.begin(), images.end(), cmp_by_x_relative);
       break;
     }
     case 42:
     {
       sort(images.begin(), images.end(), cmp_by_y_relative);
-      break;
-    }
-    case 43:
-    {
-      sort(images.begin(), images.end(), cmp_by_y_shift);
       break;
     }
     default:

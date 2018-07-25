@@ -2,49 +2,49 @@
 
 using namespace std;
 
-OverlappedImages::OverlappedImages(int ID, int IMAGE1ID, string IMAGE1NAME, string IMAGE1XORIGINCONDITION, string IMAGE1YORIGINCONDITION, double IMAGE1HORIZONTALRESOLUTION, double IMAGE1VERTICALRESOLUTION, double IMAGE1XLOW, double IMAGE1XHIGH, double IMAGE1YLOW, double IMAGE1YHIGH, double IMAGE1INCIDENCEANGLE, int IMAGE2ID, string IMAGE2NAME, string IMAGE2XORIGINCONDITION, string IMAGE2YORIGINCONDITION, double IMAGE2HORIZONTALRESOLUTION, double IMAGE2VERTICALRESOLUTION, double IMAGE2XLOW, double IMAGE2XHIGH, double IMAGE2YLOW, double IMAGE2YHIGH, double IMAGE2INCIDENCEANGLE, double OVERLAPXLOW, double OVERLAPXHIGH, double OVERLAPYLOW, double OVERLAPYHIGH)
+OverlappedImages::OverlappedImages()
 {
+}
+
+OverlappedImages::OverlappedImages(int ID, int IMAGE1ID, string IMAGE1NAME, double IMAGE1ULLONG, double IMAGE1ULLAT, double IMAGE1URLONG, double IMAGE1URLAT, double IMAGE1LRLONG, double IMAGE1LRLAT, double IMAGE1LLLONG, double IMAGE1LLLAT, double IMAGE1AREA, double IMAGE1INCIDENCEANGLE, int IMAGE2ID, string IMAGE2NAME, double IMAGE2ULLONG, double IMAGE2ULLAT, double IMAGE2URLONG, double IMAGE2URLAT, double IMAGE2LRLONG, double IMAGE2LRLAT, double IMAGE2LLLONG, double IMAGE2LLLAT, double IMAGE2AREA, double IMAGE2INCIDENCEANGLE, double OVERLAPULLONG, double OVERLAPULLAT, double OVERLAPURLONG, double OVERLAPURLAT, double OVERLAPLRLONG, double OVERLAPLRLAT, double OVERLAPLLLONG, double OVERLAPLLLAT, double OVERLAPAREA)
+{
+  /***********************/
+  /* Retrieve parameters */
+  /***********************/
   id = ID;
-  image1_area = 0;
-  image1_height = 0;
-  image1_horizontal_resolution = IMAGE1HORIZONTALRESOLUTION;
+  image1_area = IMAGE1AREA;
   image1_id = IMAGE1ID;
   image1_incidence_angle = IMAGE1INCIDENCEANGLE;
+  image1_lower_left_latitude = IMAGE1LLLAT;
+  image1_lower_left_longitude = IMAGE1LLLONG;
+  image1_lower_right_latitude = IMAGE1LRLAT;
+  image1_lower_right_longitude = IMAGE1LRLONG;
   image1_name = IMAGE1NAME;
-  image1_vertical_resolution = IMAGE1VERTICALRESOLUTION;
-  image1_width = 0;
-  image1_x_high = IMAGE1XHIGH;
-  image1_x_low = IMAGE1XLOW;
-  image1_x_origin_condition = IMAGE1XORIGINCONDITION;
-  image1_y_high = IMAGE1YHIGH;
-  image1_y_low = IMAGE1YLOW;
-  image1_y_origin_condition = IMAGE1YORIGINCONDITION;
-  image2_area = 0;
-  image2_height = 0;
-  image2_horizontal_resolution = IMAGE2HORIZONTALRESOLUTION;
+  image1_upper_left_latitude = IMAGE1ULLAT;
+  image1_upper_left_longitude = IMAGE1ULLONG;
+  image1_upper_right_latitude = IMAGE1URLAT;
+  image1_upper_right_longitude = IMAGE1URLONG;
+  image2_area = IMAGE2AREA;
   image2_id = IMAGE2ID;
   image2_incidence_angle = IMAGE2INCIDENCEANGLE;
+  image2_lower_left_latitude = IMAGE2LLLAT;
+  image2_lower_left_longitude = IMAGE2LLLONG;
+  image2_lower_right_latitude = IMAGE2LRLAT;
+  image2_lower_right_longitude = IMAGE2LRLONG;
   image2_name = IMAGE2NAME;
-  image2_vertical_resolution = IMAGE2VERTICALRESOLUTION;
-  image2_width = 0;
-  image2_x_high = IMAGE2XHIGH;
-  image2_x_low = IMAGE2XLOW;
-  image2_x_origin_condition = IMAGE2XORIGINCONDITION;
-  image2_y_high = IMAGE2YHIGH;
-  image2_y_low = IMAGE2YLOW;
-  image2_y_origin_condition = IMAGE2YORIGINCONDITION;
-  overlap_area = 0;
-  overlap_height = 0;
-  overlap_width = 0;
-  overlap_x_high = OVERLAPXHIGH;
-  overlap_x_low = OVERLAPXLOW;
-  overlap_y_high = OVERLAPYHIGH;
-  overlap_y_low = OVERLAPYLOW;
-  
-  /************************************************/
-  /* Calculate other attributes of overlap region */
-  /************************************************/
-  AuxilaryFunction();
+  image2_upper_left_latitude = IMAGE2ULLAT;
+  image2_upper_left_longitude = IMAGE2ULLONG;
+  image2_upper_right_latitude = IMAGE2URLAT;
+  image2_upper_right_longitude = IMAGE2URLONG;
+  overlap_area = OVERLAPAREA;
+  overlap_lower_left_latitude = OVERLAPLLLAT;
+  overlap_lower_left_longitude = OVERLAPLLLONG;
+  overlap_lower_right_latitude = OVERLAPLRLAT;
+  overlap_lower_right_longitude = OVERLAPLRLONG;
+  overlap_upper_left_latitude = OVERLAPULLAT;
+  overlap_upper_left_longitude = OVERLAPULLONG;
+  overlap_upper_right_latitude = OVERLAPURLAT;
+  overlap_upper_right_longitude = OVERLAPURLONG;
 }
 
 double OverlappedImages::GetImage1_area()
@@ -52,49 +52,49 @@ double OverlappedImages::GetImage1_area()
   return image1_area;
 }
 
-double OverlappedImages::GetImage1_height()
-{
-  return image1_height;
-}
-
-double OverlappedImages::GetImage1_horizontal_resolution()
-{
-  return image1_horizontal_resolution;
-}
-
 double OverlappedImages::GetImage1_incidence_angle()
 {
   return image1_incidence_angle;
 }
 
-double OverlappedImages::GetImage1_vertical_resolution()
+double OverlappedImages::GetImage1_lower_left_latitude()
 {
-  return image1_vertical_resolution;
+  return image1_lower_left_latitude;
 }
 
-double OverlappedImages::GetImage1_width()
+double OverlappedImages::GetImage1_lower_left_longitude()
 {
-  return image1_width;
+  return image1_lower_left_longitude;
 }
 
-double OverlappedImages::GetImage1_x_high()
+double OverlappedImages::GetImage1_lower_right_latitude()
 {
-  return image1_x_high;
+  return image1_lower_right_latitude;
 }
 
-double OverlappedImages::GetImage1_x_low()
+double OverlappedImages::GetImage1_lower_right_longitude()
 {
-  return image1_x_low;
+  return image1_lower_right_longitude;
 }
 
-double OverlappedImages::GetImage1_y_high()
+double OverlappedImages::GetImage1_upper_left_latitude()
 {
-  return image1_y_high;
+  return image1_upper_left_latitude;
 }
 
-double OverlappedImages::GetImage1_y_low()
+double OverlappedImages::GetImage1_upper_left_longitude()
 {
-  return image1_y_low;
+  return image1_upper_left_longitude;
+}
+
+double OverlappedImages::GetImage1_upper_right_latitude()
+{
+  return image1_upper_right_latitude;
+}
+
+double OverlappedImages::GetImage1_upper_right_longitude()
+{
+  return image1_upper_right_longitude;
 }
 
 double OverlappedImages::GetImage2_area()
@@ -102,49 +102,49 @@ double OverlappedImages::GetImage2_area()
   return image2_area;
 }
 
-double OverlappedImages::GetImage2_height()
-{
-  return image2_height;
-}
-
-double OverlappedImages::GetImage2_horizontal_resolution()
-{
-  return image2_horizontal_resolution;
-}
-
 double OverlappedImages::GetImage2_incidence_angle()
 {
   return image2_incidence_angle;
 }
 
-double OverlappedImages::GetImage2_vertical_resolution()
+double OverlappedImages::GetImage2_lower_left_latitude()
 {
-  return image2_vertical_resolution;
+  return image2_lower_left_latitude;
 }
 
-double OverlappedImages::GetImage2_width()
+double OverlappedImages::GetImage2_lower_left_longitude()
 {
-  return image2_width;
+  return image2_lower_left_longitude;
 }
 
-double OverlappedImages::GetImage2_x_high()
+double OverlappedImages::GetImage2_lower_right_latitude()
 {
-  return image2_x_high;
+  return image2_lower_right_latitude;
 }
 
-double OverlappedImages::GetImage2_x_low()
+double OverlappedImages::GetImage2_lower_right_longitude()
 {
-  return image2_x_low;
+  return image2_lower_right_longitude;
 }
 
-double OverlappedImages::GetImage2_y_high()
+double OverlappedImages::GetImage2_upper_left_latitude()
 {
-  return image2_y_high;
+  return image2_upper_left_latitude;
 }
 
-double OverlappedImages::GetImage2_y_low()
+double OverlappedImages::GetImage2_upper_left_longitude()
 {
-  return image2_y_low;
+  return image2_upper_left_longitude;
+}
+
+double OverlappedImages::GetImage2_upper_right_latitude()
+{
+  return image2_upper_right_latitude;
+}
+
+double OverlappedImages::GetImage2_upper_right_longitude()
+{
+  return image2_upper_right_longitude;
 }
 
 double OverlappedImages::GetOverlap_area()
@@ -152,34 +152,44 @@ double OverlappedImages::GetOverlap_area()
   return overlap_area;
 }
 
-double OverlappedImages::GetOverlap_height()
+double OverlappedImages::GetOverlap_lower_left_latitude()
 {
-  return overlap_height;
+  return overlap_lower_left_latitude;
 }
 
-double OverlappedImages::GetOverlap_width()
+double OverlappedImages::GetOverlap_lower_left_longitude()
 {
-  return overlap_width;
+  return overlap_lower_left_longitude;
 }
 
-double OverlappedImages::GetOverlap_x_high()
+double OverlappedImages::GetOverlap_lower_right_latitude()
 {
-  return overlap_x_high;
+  return overlap_lower_right_latitude;
 }
 
-double OverlappedImages::GetOverlap_x_low()
+double OverlappedImages::GetOverlap_lower_right_longitude()
 {
-  return overlap_x_low;
+  return overlap_lower_right_longitude;
 }
 
-double OverlappedImages::GetOverlap_y_high()
+double OverlappedImages::GetOverlap_upper_left_latitude()
 {
-  return overlap_y_high;
+  return overlap_upper_left_latitude;
 }
 
-double OverlappedImages::GetOverlap_y_low()
+double OverlappedImages::GetOverlap_upper_left_longitude()
 {
-  return overlap_y_low;
+  return overlap_upper_left_longitude;
+}
+
+double OverlappedImages::GetOverlap_upper_right_latitude()
+{
+  return overlap_upper_right_latitude;
+}
+
+double OverlappedImages::GetOverlap_upper_right_longitude()
+{
+  return overlap_upper_right_longitude;
 }
 
 int OverlappedImages::GetId()
@@ -202,102 +212,9 @@ string OverlappedImages::GetImage1_name()
   return image1_name;
 }
 
-string OverlappedImages::GetImage1_x_origin_condition()
-{
-  return image1_x_origin_condition;
-}
-
-string OverlappedImages::GetImage1_y_origin_condition()
-{
-  return image1_y_origin_condition;
-}
-
 string OverlappedImages::GetImage2_name()
 {
   return image2_name;
-}
-
-string OverlappedImages::GetImage2_x_origin_condition()
-{
-  return image2_x_origin_condition;
-}
-
-string OverlappedImages::GetImage2_y_origin_condition()
-{
-  return image2_y_origin_condition;
-}
-
-void OverlappedImages::AuxilaryFunction()
-{
-  /****************************************************/
-  /* Step 1: Calculate both images widths and heights */
-  /****************************************************/
-  CalculateImage1Height();
-  CalculateImage1Width();
-  CalculateImage2Height();
-  CalculateImage2Width();
-
-  /***************************************/
-  /* Step 2: Calculate both images areas */
-  /***************************************/
-  CalculateImage1Area();
-  CalculateImage2Area();
-
-  /**********************************************/
-  /* Step 3: Calculate overlap width and height */
-  /**********************************************/
-  CalculateOverlapHeight();
-  CalculateOverlapWidth();
-
-  /**********************************/
-  /* Step 4: Calculate overlap area */
-  /**********************************/
-  CalculateOverlapArea();
-}
-
-void OverlappedImages::CalculateImage1Area()
-{
-  image1_area = image1_width*image1_height;
-}
-
-void OverlappedImages::CalculateImage1Height()
-{
-  image1_height = (image1_y_high-image1_y_low);
-}
-
-void OverlappedImages::CalculateImage1Width()
-{
-  image1_width = (image1_x_high-image1_x_low);
-}
-
-void OverlappedImages::CalculateImage2Area()
-{
-  image2_area = image2_width*image2_height;
-}
-
-void OverlappedImages::CalculateImage2Height()
-{
-  image2_height = (image2_y_high-image2_y_low);
-}
-
-void OverlappedImages::CalculateImage2Width()
-{
-  image2_width = (image2_x_high-image2_x_low);
-}
-
-void OverlappedImages::CalculateOverlapArea()
-{
-  overlap_area = overlap_width*overlap_height;
-}
-
-void OverlappedImages::CalculateOverlapHeight()
-{
-  overlap_height = (overlap_y_high-overlap_y_low);
-}
-
-void OverlappedImages::CalculateOverlapWidth()
-{
-  overlap_width = (overlap_x_high-overlap_x_low);
 }
 
 void OverlappedImages::Display(OverlappedImages a)
@@ -305,62 +222,70 @@ void OverlappedImages::Display(OverlappedImages a)
   /********************/
   /* Print header row */
   /********************/
-  printf("%-5s %-19s %4s %4s %11s %11s %11s %11s %8s %8s %5s %-19s %4s %4s %11s %11s %11s %11s %8s %8s %5s %11s %11s %11s %11s\n", 
-	 "ID", 
+  printf("%-5s %-19s %10s %10s %10s %10s %10s %10s %10s %10s %5s %-19s %10s %10s %10s %10s %10s %10s %10s %10s %5s %10s %10s %10s %10s %10s %10s %10s %10s\n", 
+	 "ID",
 	 "I1NAME",
-	 "I1HR", 
-	 "I1VR",
-	 "I1XLOW",
-	 "I1XHIGH",
-	 "I1YLOW",
-	 "I1YHIGH",
-	 "I1HEIGHT", 
-	 "I1WIDTH", 
+	 "I1ULLONG",
+	 "I1ULLAT",
+	 "I1URLONG",
+	 "I1URLAT",
+	 "I1LRLONG",
+	 "I1LRLAT",
+	 "I1LLLONG",
+	 "I1LLLAT",
 	 "I1IA", 
-	 "I2NAME", 
-	 "I2HR", 
-	 "I2VR",
-	 "I2XLOW",
-	 "I2XHIGH",
-	 "I2YLOW",
-	 "I2YHIGH", 
-	 "I2HEIGHT", 
-	 "I2WIDTH", 
+	 "I2NAME",
+	 "I2ULLONG",
+	 "I2ULLAT",
+	 "I2URLONG",
+	 "I2URLAT",
+	 "I2LRLONG",
+	 "I2LRLAT",
+	 "I2LLLONG",
+	 "I2LLLAT", 
 	 "I2IA", 
-	 "OXLOW", 
-	 "OXHIGH", 
-	 "OYLOW", 
-	 "OYHIGH");
+	 "OULLONG",
+	 "OULLAT",
+	 "OURLONG",
+	 "OURLAT",
+	 "OLRLONG",
+	 "OLRLAT",
+	 "OLLLONG",
+	 "OLLLAT");
   
   /******************/
   /* Print data row */
   /******************/
-  printf("%-5d %-19s %4.2lf %4.2lf %11.2lf %11.2lf %11.2lf %11.2lf %8.2lf %8.2lf %5.2lf %-19s %4.2lf %4.2lf %11.2lf %11.2lf %11.2lf %11.2lf %8.2lf %8.2lf %5.2lf %11.2lf %11.2lf %11.2lf %11.2lf\n", 
+  printf("%-5d %-19s %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %5.2lf %-19s %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %5.2lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf\n", 
 	 a.GetId(), 
 	 a.GetImage1_name().c_str(), 
-	 a.GetImage1_horizontal_resolution(), 
-	 a.GetImage1_vertical_resolution(),
-	 a.GetImage1_x_low(),
-	 a.GetImage1_x_high(),
-	 a.GetImage1_y_low(),
-	 a.GetImage1_y_high(),
-	 a.GetImage1_height(), 
-	 a.GetImage1_width(), 
+	 a.GetImage1_upper_left_longitude(),
+	 a.GetImage1_upper_left_latitude(),
+	 a.GetImage1_upper_right_longitude(),
+	 a.GetImage1_upper_right_latitude(),
+	 a.GetImage1_lower_right_longitude(),
+	 a.GetImage1_lower_right_latitude(),
+	 a.GetImage1_lower_left_longitude(),
+	 a.GetImage1_lower_left_latitude(),
 	 a.GetImage1_incidence_angle(),
 	 a.GetImage2_name().c_str(),
-	 a.GetImage2_horizontal_resolution(), 
-	 a.GetImage2_vertical_resolution(),
-	 a.GetImage2_x_low(),
-	 a.GetImage2_x_high(),
-	 a.GetImage2_y_low(),
-	 a.GetImage2_y_high(), 
-	 a.GetImage2_height(), 
-	 a.GetImage2_width(), 
+	 a.GetImage2_upper_left_longitude(),
+	 a.GetImage2_upper_left_latitude(),
+	 a.GetImage2_upper_right_longitude(),
+	 a.GetImage2_upper_right_latitude(),
+	 a.GetImage2_lower_right_longitude(),
+	 a.GetImage2_lower_right_latitude(),
+	 a.GetImage2_lower_left_longitude(),
+	 a.GetImage2_lower_left_latitude(), 
 	 a.GetImage2_incidence_angle(), 
-	 a.GetOverlap_x_low(), 
-	 a.GetOverlap_x_high(), 
-	 a.GetOverlap_y_low(), 
-	 a.GetOverlap_y_high());
+	 a.GetOverlap_upper_left_longitude(),
+	 a.GetOverlap_upper_left_latitude(),
+	 a.GetOverlap_upper_right_longitude(),
+	 a.GetOverlap_upper_right_latitude(),
+	 a.GetOverlap_lower_right_longitude(),
+	 a.GetOverlap_lower_right_latitude(),
+	 a.GetOverlap_lower_left_longitude(),
+	 a.GetOverlap_lower_left_latitude());
 
   return;
 }
@@ -370,63 +295,71 @@ void OverlappedImages::Display(vector <OverlappedImages> &list)
   /********************/
   /* Print header row */
   /********************/
-  printf("%-5s %-19s %4s %4s %11s %11s %11s %11s %8s %8s %5s %-19s %4s %4s %11s %11s %11s %11s %8s %8s %5s %11s %11s %11s %11s\n", 
-	 "ID", 
+  printf("%-5s %-19s %10s %10s %10s %10s %10s %10s %10s %10s %5s %-19s %10s %10s %10s %10s %10s %10s %10s %10s %5s %10s %10s %10s %10s %10s %10s %10s %10s\n", 
+	 "ID",
 	 "I1NAME",
-	 "I1HR", 
-	 "I1VR",
-	 "I1XLOW",
-	 "I1XHIGH",
-	 "I1YLOW",
-	 "I1YHIGH",
-	 "I1HEIGHT", 
-	 "I1WIDTH", 
+	 "I1ULLONG",
+	 "I1ULLAT",
+	 "I1URLONG",
+	 "I1URLAT",
+	 "I1LRLONG",
+	 "I1LRLAT",
+	 "I1LLLONG",
+	 "I1LLLAT",
 	 "I1IA", 
-	 "I2NAME", 
-	 "I2HR", 
-	 "I2VR",
-	 "I2XLOW",
-	 "I2XHIGH",
-	 "I2YLOW",
-	 "I2YHIGH", 
-	 "I2HEIGHT", 
-	 "I2WIDTH", 
+	 "I2NAME",
+	 "I2ULLONG",
+	 "I2ULLAT",
+	 "I2URLONG",
+	 "I2URLAT",
+	 "I2LRLONG",
+	 "I2LRLAT",
+	 "I2LLLONG",
+	 "I2LLLAT", 
 	 "I2IA", 
-	 "OXLOW", 
-	 "OXHIGH", 
-	 "OYLOW", 
-	 "OYHIGH");
+	 "OULLONG",
+	 "OULLAT",
+	 "OURLONG",
+	 "OURLAT",
+	 "OLRLONG",
+	 "OLRLAT",
+	 "OLLLONG",
+	 "OLLLAT");
   
   /*******************/
   /* Print data rows */
   /*******************/
   for(int i=0; i<(int)list.size(); i++)
-    printf("%-5d %-19s %4.2lf %4.2lf %11.2lf %11.2lf %11.2lf %11.2lf %8.2lf %8.2lf %5.2lf %-19s %4.2lf %4.2lf %11.2lf %11.2lf %11.2lf %11.2lf %8.2lf %8.2lf %5.2lf %11.2lf %11.2lf %11.2lf %11.2lf\n", 
+    printf("%-5d %-19s %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %5.2lf %-19s %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %5.2lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf %10.4lf\n",
 	 list[i].GetId(), 
 	 list[i].GetImage1_name().c_str(), 
-	 list[i].GetImage1_horizontal_resolution(), 
-	 list[i].GetImage1_vertical_resolution(),
-	 list[i].GetImage1_x_low(),
-	 list[i].GetImage1_x_high(),
-	 list[i].GetImage1_y_low(),
-	 list[i].GetImage1_y_high(),
-	 list[i].GetImage1_height(), 
-	 list[i].GetImage1_width(), 
+	 list[i].GetImage1_upper_left_longitude(),
+	 list[i].GetImage1_upper_left_latitude(),
+	 list[i].GetImage1_upper_right_longitude(),
+	 list[i].GetImage1_upper_right_latitude(),
+	 list[i].GetImage1_lower_right_longitude(),
+	 list[i].GetImage1_lower_right_latitude(),
+	 list[i].GetImage1_lower_left_longitude(),
+	 list[i].GetImage1_lower_left_latitude(),
 	 list[i].GetImage1_incidence_angle(),
 	 list[i].GetImage2_name().c_str(),
-	 list[i].GetImage2_horizontal_resolution(), 
-	 list[i].GetImage2_vertical_resolution(),
-	 list[i].GetImage2_x_low(),
-	 list[i].GetImage2_x_high(),
-	 list[i].GetImage2_y_low(),
-	 list[i].GetImage2_y_high(), 
-	 list[i].GetImage2_height(), 
-	 list[i].GetImage2_width(), 
+	 list[i].GetImage2_upper_left_longitude(),
+	 list[i].GetImage2_upper_left_latitude(),
+	 list[i].GetImage2_upper_right_longitude(),
+	 list[i].GetImage2_upper_right_latitude(),
+	 list[i].GetImage2_lower_right_longitude(),
+	 list[i].GetImage2_lower_right_latitude(),
+	 list[i].GetImage2_lower_left_longitude(),
+	 list[i].GetImage2_lower_left_latitude(), 
 	 list[i].GetImage2_incidence_angle(), 
-	 list[i].GetOverlap_x_low(), 
-	 list[i].GetOverlap_x_high(), 
-	 list[i].GetOverlap_y_low(), 
-	 list[i].GetOverlap_y_high());
+	 list[i].GetOverlap_upper_left_longitude(),
+	 list[i].GetOverlap_upper_left_latitude(),
+	 list[i].GetOverlap_upper_right_longitude(),
+	 list[i].GetOverlap_upper_right_latitude(),
+	 list[i].GetOverlap_lower_right_longitude(),
+	 list[i].GetOverlap_lower_right_latitude(),
+	 list[i].GetOverlap_lower_left_longitude(),
+	 list[i].GetOverlap_lower_left_latitude());
 
   return;
 }

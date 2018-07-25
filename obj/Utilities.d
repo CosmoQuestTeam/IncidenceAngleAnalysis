@@ -1,14 +1,16 @@
 /Users/mrichardson/Desktop/Incidence_Angle_Analysis/obj/Utilities.o: \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/src/Utilities.cc \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Utilities.h \
-  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Images.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/CheckOverlap.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/EquirectangularProjection.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Images.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ProjectiveTransformation.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Quadrilateral.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ImageSets.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/IncidenceAngles.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Marks.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/OverlappedImages.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ReadAuxilaryData.h \
-  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Rectangle.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveImages.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/exception.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/build_config.h \
@@ -24,6 +26,13 @@
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/warning.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/variant.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveImageSets.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveMarks.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SearchImages.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SearchIncidenceAngles.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SearchMarks.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortImages.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortImageSets.h \
-  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortIncidenceAngles.h
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortIncidenceAngles.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortMarks.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortOverlappedImages.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SphericalLawofCosines.h

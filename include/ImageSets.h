@@ -15,8 +15,6 @@ class ImageSets
   /* Declaration of class variables */
   /***********************************/
   private:
-    double horizontal_latitudinal_change;
-    double horizontal_resolution;
     double lower_left_latitude;
     double lower_left_longitude;
     double lower_left_x;
@@ -33,8 +31,6 @@ class ImageSets
     double minimum_longitude;
     double minimum_x;
     double minimum_y;
-    double physical_height;
-    double physical_width;
     double pixel_resolution;
     double priority;
     double sun_angle;
@@ -46,10 +42,6 @@ class ImageSets
     double upper_right_longitude;
     double upper_right_x;
     double upper_right_y;
-    double vertical_longitudinal_change;
-    double vertical_resolution;
-    double x_shift;
-    double y_shift;
     int application_id;
     int height;
     int id;
@@ -62,14 +54,14 @@ class ImageSets
     std::string updated_at;
     std::string upper_left_corner_x_status;
     std::string upper_left_corner_y_status;
+    std::vector <double> physical_height;
+    std::vector <double> physical_width;
 
   /************************************/
   /* Declaration of class functions */
   /************************************/
   public:
     ImageSets(int, std::string, int, double, double, double, double, double, double, double, double, double, double, double, std::string, std::string, std::string, std::string);
-    double GetHorizontal_latitudinal_change();
-    double GetHorizontal_resolution();
     double GetLower_left_latitude();
     double GetLower_left_longitude();
     double GetLower_left_x();
@@ -86,8 +78,6 @@ class ImageSets
     double GetMinimum_longitude();
     double GetMinimum_x();
     double GetMinimum_y();
-    double GetPhysical_height();
-    double GetPhysical_width();
     double GetPixel_resolution();
     double GetPriority();
     double GetSun_angle();
@@ -99,10 +89,6 @@ class ImageSets
     double GetUpper_right_longitude();
     double GetUpper_right_x();
     double GetUpper_right_y();
-    double GetVertical_longitudinal_change();
-    double GetVertical_resolution();
-    double GetX_shift();
-    double GetY_shift();
     int GetApplication_id();
     int GetHeight();
     int GetId();
@@ -115,8 +101,9 @@ class ImageSets
     std::string GetUpdated_at();
     std::string GetUpper_left_corner_x_status();
     std::string GetUpper_left_corner_y_status();
-    void AuxilaryFunction();
-    void CalculateHorizontal_resolution();
+    std::vector <double> GetPhysical_height();
+    std::vector <double> GetPhysical_width();
+    void AuxilaryFunction(bool = false);
     void CalculateLower_left_x();
     void CalculateLower_left_y();
     void CalculateLower_right_x();
@@ -128,12 +115,8 @@ class ImageSets
     void CalculateUpper_left_y();
     void CalculateUpper_right_x();
     void CalculateUpper_right_y();
-    void CalculateVertical_resolution();
-    void CalculateXShift();
-    void CalculateYShift();
     void DetermineCoordinateExtrema();
     void DetermineImageReference();
-    void DetermineImageShape();
     void RetrieveHeight();
     void RetrieveWidth();
 };

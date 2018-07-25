@@ -8,6 +8,7 @@
 #include <string>
 #include "EquirectangularProjection.h"
 #include "ProjectiveTransformation.h"
+#include "Quadrilateral.h"
 
 class Images
 {
@@ -15,7 +16,7 @@ class Images
   /* Declaration of class variables */
   /***********************************/
   private:
-    double horizontal_resolution;
+    double area;
     double lower_left_latitude;
     double lower_left_longitude;
     double lower_left_x;
@@ -32,9 +33,6 @@ class Images
     double minimum_longitude;
     double minimum_x;
     double minimum_y;
-    double physical_height;
-    double physical_width;
-    double pixel_resolution;
     double priority;
     double sun_angle;
     double upper_left_latitude;
@@ -45,11 +43,6 @@ class Images
     double upper_right_longitude;
     double upper_right_x;
     double upper_right_y;
-    double vertical_resolution;
-    double x_offset;
-    double x_shift;
-    double y_offset;
-    double y_shift;
     int application_id;
     int done;
     int height;
@@ -60,6 +53,7 @@ class Images
     int x_relative;
     int y_relative;
     ProjectiveTransformation pt;
+    Quadrilateral quad;
     std::string created_at;
     std::string details;
     std::string file_location;
@@ -67,13 +61,17 @@ class Images
     std::string updated_at;
     std::string upper_left_corner_x_status;
     std::string upper_left_corner_y_status;
+    std::vector <double> physical_height;
+    std::vector <double> physical_width;
+    std::vector < std::vector <double> > shape_vector;
 
   /************************************/
   /* Declaration of class functions */
   /************************************/
   public:
+    Images();
     Images(int, int, int, std::string, std::string, double, int, int, double, std::string, std::string, std::string);
-    double GetHorizontal_resolution();
+    double GetArea();
     double GetLower_left_latitude();
     double GetLower_left_longitude();
     double GetLower_left_x();
@@ -90,9 +88,6 @@ class Images
     double GetMinimum_longitude();
     double GetMinimum_x();
     double GetMinimum_y();
-    double GetPhysical_height();
-    double GetPhysical_width();
-    double GetPixel_resolution();
     double GetPriority();
     double GetSun_angle();
     double GetUpper_left_latitude();
@@ -103,11 +98,6 @@ class Images
     double GetUpper_right_longitude();
     double GetUpper_right_x();
     double GetUpper_right_y();
-    double GetVertical_resolution();
-    double GetX_offset();
-    double GetX_shift();
-    double GetY_offset();
-    double GetY_shift();
     int GetApplication_id();
     int GetDone();
     int GetHeight();
@@ -118,6 +108,7 @@ class Images
     int GetX_relative();
     int GetY_relative();
     ProjectiveTransformation GetProjective_transformation();
+    Quadrilateral GetQuadrilateral();
     std::string GetCreated_at();
     std::string GetDetails();
     std::string GetFile_location();
@@ -125,40 +116,23 @@ class Images
     std::string GetUpdated_at();
     std::string GetUpper_left_corner_x_status();
     std::string GetUpper_left_corner_y_status();
-    void AuxilaryFunction(std::string, std::string, double, double, double, double, double, double, double, ProjectiveTransformation);
-    void CalculateLower_left_latitude();
-    void CalculateLower_left_longitude();
-    void CalculateLower_left_x();
-    void CalculateLower_left_y();
-    void CalculateLower_right_latitude();
-    void CalculateLower_right_longitude();
-    void CalculateLower_right_x();
-    void CalculateLower_right_y();
+    std::vector <double> GetPhysical_height();
+    std::vector <double> GetPhysical_width();
+    std::vector < std::vector <double> > GetShape_vector();
+    void AuxilaryFunction(std::string, std::string, ProjectiveTransformation, bool = false);
+    void CalculateBoundingRegionCartesianCoordinates();
+    void CalculateBoundingRegionSelenographicCoordinates();
     void CalculatePhysical_height();
     void CalculatePhysical_width();
-    void CalculateUpper_left_latitude();
-    void CalculateUpper_left_longitude();
-    void CalculateUpper_left_x();
-    void CalculateUpper_left_y();
-    void CalculateUpper_right_latitude();
-    void CalculateUpper_right_longitude();
-    void CalculateUpper_right_x();
-    void CalculateUpper_right_y();
+    void CalculateQuadrilateral();
     void DetermineCoordinateExtrema();
     void RetrieveHeight();
     void RetrieveWidth();
     void RetrieveX_relative();
     void RetrieveY_relative();
-    void SetHorizontal_resolution(double);
-    void SetPixel_resolution(double);
     void SetProjective_transformation(ProjectiveTransformation);
-    void SetVertical_resolution(double);
     void SetUpper_left_corner_x_status(std::string);
     void SetUpper_left_corner_y_status(std::string);
-    void SetX_offset(double);
-    void SetX_shift(double);
-    void SetY_offset(double);
-    void SetY_shift(double);
     void *GetValue(std::string);
 };
 

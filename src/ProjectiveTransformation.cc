@@ -76,6 +76,94 @@ double ProjectiveTransformation::ComputeMatrixDeterminant_3X3(std::vector < std:
   return Det;
 }
 
+double ProjectiveTransformation::ComputeSource2TargetCoordinate_x(double x, double y)
+{
+  /*************************************/
+  /* Declaration of function variables */
+  /*************************************/
+  double coordinate;
+  vector <double> h_c(2); 
+
+  /***************************************/
+  /* Compute the homogenous x coordinate */
+  /***************************************/
+  h_c[0] = Transform_Source2Target_Matrix[0][0]*x + Transform_Source2Target_Matrix[0][1]*y + Transform_Source2Target_Matrix[0][2];
+  h_c[1] = Transform_Source2Target_Matrix[2][0]*x + Transform_Source2Target_Matrix[2][1]*y + Transform_Source2Target_Matrix[2][2];
+  
+  /******************************/
+  /* Compute target coordinates */
+  /******************************/
+  coordinate = h_c[0]/h_c[1];
+  
+  return coordinate;
+}
+
+double ProjectiveTransformation::ComputeSource2TargetCoordinate_y(double x, double y)
+{
+  /*************************************/
+  /* Declaration of function variables */
+  /*************************************/
+  double coordinate;
+  vector <double> h_c(2); 
+
+  /***************************************/
+  /* Compute the homogenous x coordinate */
+  /***************************************/
+  h_c[0] = Transform_Source2Target_Matrix[1][0]*x + Transform_Source2Target_Matrix[1][1]*y + Transform_Source2Target_Matrix[1][2];
+  h_c[1] = Transform_Source2Target_Matrix[2][0]*x + Transform_Source2Target_Matrix[2][1]*y + Transform_Source2Target_Matrix[2][2];
+  
+  /******************************/
+  /* Compute target coordinates */
+  /******************************/
+  coordinate = h_c[0]/h_c[1];
+  
+  return coordinate;
+}
+
+double ProjectiveTransformation::ComputeTarget2SourceCoordinate_x(double x, double y)
+{
+  /*************************************/
+  /* Declaration of function variables */
+  /*************************************/
+  double coordinate;
+  vector <double> h_c(2); 
+
+  /***************************************/
+  /* Compute the homogenous x coordinate */
+  /***************************************/
+  h_c[0] = Transform_Target2Source_Matrix[0][0]*x + Transform_Target2Source_Matrix[0][1]*y + Transform_Target2Source_Matrix[0][2];
+  h_c[1] = Transform_Target2Source_Matrix[2][0]*x + Transform_Target2Source_Matrix[2][1]*y + Transform_Target2Source_Matrix[2][2];
+  
+  /******************************/
+  /* Compute target coordinates */
+  /******************************/
+  coordinate = h_c[0]/h_c[1];
+  
+  return coordinate;
+}
+
+double ProjectiveTransformation::ComputeTarget2SourceCoordinate_y(double x, double y)
+{
+  /*************************************/
+  /* Declaration of function variables */
+  /*************************************/
+  double coordinate;
+  vector <double> h_c(2); 
+
+  /***************************************/
+  /* Compute the homogenous x coordinate */
+  /***************************************/
+  h_c[0] = Transform_Target2Source_Matrix[1][0]*x + Transform_Target2Source_Matrix[1][1]*y + Transform_Target2Source_Matrix[1][2];
+  h_c[1] = Transform_Target2Source_Matrix[2][0]*x + Transform_Target2Source_Matrix[2][1]*y + Transform_Target2Source_Matrix[2][2];
+  
+  /******************************/
+  /* Compute target coordinates */
+  /******************************/
+  coordinate = h_c[0]/h_c[1];
+  
+  return coordinate;
+}
+
 vector <double> ProjectiveTransformation::ComputeCoefficientMatrix(vector < vector <double> > &A)
 {
   /*************************************/

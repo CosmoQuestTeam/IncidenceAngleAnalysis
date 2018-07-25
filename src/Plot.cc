@@ -2,11 +2,367 @@
 
 using namespace std;
 
-// void Plot::CumulativeFrequency()
-// {
-//   return;
-// }
+void Plot::CumulativeFrequencySizeDistribution(string CraterCatalogue1, string CraterCatalogue2)
+{
+  /*************************************/
+  /* Declaration of function variables */
+  /*************************************/
+  double binwidth;
+  double incidence_angle_1;
+  double incidence_angle_2;
+  double log10_xlow;
+  double log10_xup;
+  double m2km;
+  double max1;
+  double max2;
+  double min1;
+  double min2;
+  double xlow;
+  double xup;
+  ifstream InFile;
+  int canheight;
+  int canwidth;
+  int index1;
+  int index2;
+  int length;
+  int nbins;
+  string buffer;
+  string format;
+  string filename;
+  string imagename1;
+  string imagename2;
+  TCanvas *can;
+  TGraphErrors *TG1;
+  TGraphErrors *TG2;
+  TLegend *leg;
+  vector <double> A1;
+  vector <double> A2;
+  vector <double> D1;
+  vector <double> D2;
+  vector <double> XAXISBIN;
+  vector <double> XAXISBINLOG;
+  vector < vector <double> > CC1;
+  vector < vector <double> > CC2;
+  
+  /*******************************/
+  /* Open and read-in Filename 1 */
+  /*******************************/
+  if(Utilities::FileExists(CraterCatalogue1))
+    InFile.open(CraterCatalogue1.c_str());
+  else
+  {
+    printf("Error: File %s does not exist!\n", CraterCatalogue1.c_str());
+    exit(EXIT_FAILURE);
+  }
+  while(getline(InFile, buffer))
+  {
+    double v1, v2, v3, v4, v5, v6, v7, v8, v9, v10;
+    format = "%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf";
+    int nelements = sscanf(buffer.c_str(), format.c_str(), &v1, &v2, &v3, &v4, &v5, &v6, &v7, &v8, &v9, &v10);
+    if(nelements == 10)
+    {
+      vector <double> row(10, 0.0);
+      row[0] = v1; // Cluster ID
+      row[1] = v2; // Cluster center mean x position
+      row[2] = v3; // Cluster center x standard deviation
+      row[3] = v4; // Cluster center mean y position
+      row[4] = v5; // Cluster center y standard deviation
+      row[5] = v6; // Crater mean diameter
+      row[6] = v7; // Crater diameter standard deviation
+      row[7] = v8; // Confidence
+      row[8] = v9; // Region area
+      row[9] = v10; // Number of data points used to construct current row
+      CC1.push_back(row);      
+    }
+  }
+  InFile.close();
 
+  /*******************************/
+  /* Open and read-in Filename 2 */
+  /*******************************/
+  if(Utilities::FileExists(CraterCatalogue2))
+    InFile.open(CraterCatalogue2.c_str());
+  else
+  {
+    printf("Error: File %s does not exist!\n", CraterCatalogue2.c_str());
+    exit(EXIT_FAILURE);
+  }
+  while(getline(InFile, buffer))
+  {
+    double v1, v2, v3, v4, v5, v6, v7, v8, v9, v10;
+    format = "%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf";
+    int nelements = sscanf(buffer.c_str(), format.c_str(), &v1, &v2, &v3, &v4, &v5, &v6, &v7, &v8, &v9, &v10);
+    if(nelements == 10)
+    {
+      vector <double> row(10, 0.0);
+      row[0] = v1; // Cluster ID
+      row[1] = v2; // Cluster center mean x position
+      row[2] = v3; // Cluster center x standard deviation
+      row[3] = v4; // Cluster center mean y position
+      row[4] = v5; // Cluster center y standard deviation
+      row[5] = v6; // Crater mean diameter
+      row[6] = v7; // Crater diameter standard deviation
+      row[7] = v8; // Confidence
+      row[8] = v9; // Region area
+      row[9] = v10; // Number of data points used to construct current row
+      CC2.push_back(row);
+    }
+  }
+  InFile.close();
+
+  /******************************************************/
+  /* Parse filename 1 to retrieve pertinent information */
+  /******************************************************/
+  index1 = CraterCatalogue1.find("_M")+1;
+  index2 = CraterCatalogue1.find("E_")+1;
+  length = index2-index1;
+  imagename1 = CraterCatalogue1.substr(index1, length);
+  index1 = index2+1;
+  index2 = CraterCatalogue1.rfind(".");
+  length = index2-index1;
+  incidence_angle_1 = stod(CraterCatalogue1.substr(index1, length));
+
+  /******************************************************/
+  /* Parse filename 1 to retrieve pertinent information */
+  /******************************************************/
+  index1 = CraterCatalogue2.find("_M")+1;
+  index2 = CraterCatalogue2.find("E_")+1;
+  length = index2-index1;
+  imagename2 = CraterCatalogue2.substr(index1, length);
+  index1 = index2+1;
+  index2 = CraterCatalogue2.rfind(".");
+  length = index2-index1;
+  incidence_angle_2 = stod(CraterCatalogue2.substr(index1, length));
+  
+  /***************/
+  /* Select data */
+  /***************/
+  m2km = 1.0E-3;
+  for(int i=0; i<(int)CC1.size(); i++)
+  {
+    D1.push_back(CC1[i][5]*m2km);
+    A1.push_back(CC1[i][8]*m2km*m2km);
+  }
+  for(int i=0; i<(int)CC2.size(); i++)
+  {
+    D2.push_back(CC2[i][5]*m2km);
+    A2.push_back(CC2[i][8]*m2km*m2km);
+  }
+
+  /***************/
+  /* Data switch */
+  /***************/
+  if(D2.size() > D1.size())
+  {
+    D1.swap(D2);
+    A1.swap(A2);
+    imagename1.swap(imagename2);
+    double temp = incidence_angle_1;
+    incidence_angle_1 = incidence_angle_2;
+    incidence_angle_2 = temp;
+  }
+  
+  /*****************************************/
+  /* Determine plot spacing and number of  */
+  /* bins (Using even logarithmic spacing) */
+  /*****************************************/
+  binwidth = 1.0/27; // Unit: log_10(diameter [km])
+  max1 = Utilities::ArrayMaximum(D1.data(), (int)D1.size());
+  max2 = Utilities::ArrayMaximum(D2.data(), (int)D2.size()); 
+  min1 = Utilities::ArrayMinimum(D1.data(), (int)D1.size());
+  min2 = Utilities::ArrayMinimum(D2.data(), (int)D2.size());
+  xlow = (min1 < min2) ? min1 : min2;
+  xup = (max1 > max2) ? max1 : max2;
+  log10_xlow = log10(xlow);
+  log10_xup = log10(xup);
+  nbins = (log10_xup-log10_xlow)/binwidth;
+
+  /**********************************************/
+  /* Calculate left edge and center of each bin */
+  /**********************************************/
+  for(int i=0; i<=nbins; i++)
+  {
+    XAXISBINLOG.push_back(log10_xlow+binwidth*i);
+    XAXISBIN.push_back(pow(10, XAXISBINLOG.back()));
+  }
+  
+  /**************************************/
+  /* Calculate cumulative distributions */
+  /**************************************/
+  vector < set <double> > A_K_set1(nbins+1, set <double> ());
+  vector < set <double> > A_K_set2(nbins+1, set <double> ());
+  vector <double> A_K1(nbins+1, 0.0);
+  vector <double> A_K2(nbins+1, 0.0);
+  vector <double> Density1(nbins+1, 0.0);
+  vector <double> Density2(nbins+1, 0.0);
+  vector <double> Density1_Error(nbins+1, 0.0);
+  vector <double> Density2_Error(nbins+1, 0.0);
+  vector <double> n_K1(nbins+1, 0.0);
+  vector <double> n_K2(nbins+1, 0.0);
+  double bin_number = 1.0/binwidth;
+  for(int i=0; i<(int)D1.size(); i++)
+  {    
+    /******************************************/
+    /* Calculate common log value of diameter */
+    /******************************************/
+    double logD = log10(D1[i]);
+
+    /************************/
+    /* Determine bin number */
+    /************************/
+    int index = (logD-log10_xlow)*bin_number;
+    
+    /**************************************/
+    /* Increment all bins associated with */
+    /* diameters less than or equal logD  */
+    /**************************************/
+    n_K1[index]++;
+    
+    /***********************************************/
+    /* Determine area of region from which craters */
+    /* within the nth bin are associated with      */
+    /***********************************************/
+    A_K_set1[index].insert(A1[i]);
+  }
+  
+  for(int i=0; i<(int)D2.size(); i++)
+  {
+    /******************************************/
+    /* Calculate common log value of diameter */
+    /******************************************/
+    double logD = log10(D2[i]);
+
+    /************************/
+    /* Determine bin number */
+    /************************/
+    int index = (logD-log10_xlow)*bin_number;
+
+    /***************************************/
+    /* Increment bin associated with index */
+    /***************************************/
+    n_K2[index]++;
+
+    /***********************************************/
+    /* Determine area of region from which craters */
+    /* within the nth bin are associated with      */
+    /***********************************************/
+    A_K_set2[index].insert(A2[i]);
+  }
+  
+  /*************************************/
+  /* Calculate total area for each bin */
+  /*************************************/
+  for(int i=0; i<=nbins; i++)
+  {
+    /*************************************************/
+    /* Retrieve values from ith area of sets 1 and 2 */
+    /*************************************************/
+    vector <double> A_K1_Sum(A_K_set1[i].begin(), A_K_set1[i].end());
+    vector <double> A_K2_Sum(A_K_set2[i].begin(), A_K_set2[i].end());
+    
+    /****************/
+    /* Total area 1 */
+    /****************/
+    for(int j=0; j<(int)A_K1_Sum.size(); j++)
+      A_K1[i] += A_K1_Sum[j];
+      
+    /****************/
+    /* Total area 2 */
+    /****************/
+    for(int j=0; j<(int)A_K2_Sum.size(); j++)
+      A_K2[i] += A_K2_Sum[j];
+  }
+
+  /***********************/
+  /* Density calculation */
+  /***********************/
+  for(int i=nbins; i>=0; i--)
+    for(int j=i; j<=nbins; j++)
+    {
+      Density1[i] += (A_K1[j] != 0) ? n_K1[j]/A_K1[j] : 0;
+      Density2[i] += (A_K2[j] != 0) ? n_K2[j]/A_K2[j] : 0;
+    }
+  
+  /*****************************/
+  /* Density error calculation */
+  /*****************************/
+  for(int i=nbins; i>=0; i--)
+  {
+    double N1 = 0;
+    double N2 = 0;
+    for(int j=i; j<=nbins; j++)
+    {
+      N1 += n_K1[j];
+      N2 += n_K1[j];
+    }
+    
+    Density1_Error[i] = Density1[i]/sqrt(N1);
+    Density2_Error[i] = Density2[i]/sqrt(N2);
+  }
+  
+  /*********************/
+  /* Initialize canvas */
+  /*********************/
+  canwidth = 900;
+  canheight = 900;
+  can = new TCanvas("Canvas", "", canwidth, canheight);
+  can->SetLogy();
+  can->SetLogx();
+  can->SetGridx();
+  can->SetGridy();
+  
+  /**********************/
+  /* Initialize graph 1 */
+  /**********************/
+  TG1 = new TGraphErrors(nbins, XAXISBIN.data(), Density1.data(), 0, Density1_Error.data());
+  
+  /**********************/
+  /* Initialize graph 2 */
+  /**********************/
+  TG2 = new TGraphErrors(nbins, XAXISBIN.data(), Density2.data(), 0, Density2_Error.data());
+  
+  /*****************/
+  /* Plot settings */
+  /*****************/
+  TG1->SetTitle("");
+  TG1->GetXaxis()->SetTitle("Diameter [km]");
+  TG1->GetYaxis()->SetTitle("Cumulative Number of Craters [km^{-2}]");
+  TG1->GetXaxis()->CenterTitle();
+  TG1->GetYaxis()->CenterTitle();
+  TG1->SetMarkerStyle(21);
+  TG1->SetMarkerColor(kBlue);
+  TG1->GetXaxis()->SetRangeUser(xlow, xup);
+  TG1->Draw("AP");
+  TG2->SetMarkerStyle(21);
+  TG2->SetMarkerColor(kRed);
+  TG2->Draw("P");
+
+  /**********/
+  /* Legend */
+  /**********/
+  //leg = new TLegend(0.7,0.7,0.9,0.9);
+  leg = new TLegend(0.2,0.2,0.4,0.4);
+  buffer = imagename1+", "+to_string(incidence_angle_1);
+  leg->AddEntry(TG1, buffer.c_str(), "p");
+  buffer = imagename2+", "+to_string(incidence_angle_2);
+  leg->AddEntry(TG2, buffer.c_str(), "p");
+  leg->Draw();
+  
+  /*********************/
+  /* Save plot to file */
+  /*********************/
+  filename = "CumulativeFrequency_vs_SizeDistribution.ps";
+  can->SaveAs(filename.c_str());
+
+  /***********************************/
+  /* Free memory reserved for canvas */
+  /***********************************/
+  delete can;
+  delete TG1;
+  delete TG2;
+
+  return;
+}
 
 // void Plot::DifferentIncidenceAngleStatistics(std::vector <OverlappedImages> &OI, std::vector <OverlappedImages> &DIA)
 // {
@@ -906,7 +1262,7 @@ void Plot::MasterImage(ImageSets a, bool selenographic)
     Y_Coords.push_back(lower_left_y);
     X_Coords.push_back(upper_left_x);
     Y_Coords.push_back(upper_left_y);
-    dot = 0.01*(a.GetPhysical_width());
+    dot = 0.01*abs(upper_left_x-upper_right_x);
   }
   n = (int)X_Coords.size();
   plot = new TPolyLine(n, X_Coords.data(), Y_Coords.data());
@@ -1431,7 +1787,7 @@ void Plot::MasterImage_w_SubImages(ImageSets a, vector <Images> &b, bool selenog
     Y_Coords.push_back(lower_left_y);
     X_Coords.push_back(upper_left_x);
     Y_Coords.push_back(upper_left_y);
-    dot = 0.01*(a.GetPhysical_width());
+    dot = 0.01*abs(upper_left_x-upper_right_x);
   }
   n = (int)X_Coords.size();
   plot = new TPolyLine(n, X_Coords.data(), Y_Coords.data());
@@ -1601,12 +1957,18 @@ void Plot::MasterImage_w_SubImages(ImageSets a, vector <Images> &b, bool selenog
     delete el;
     delete leg;
     delete can;
+    delete sub_image_plot;
 
     /************************/
     /* Increase scale level */
     /************************/
     scale++;
   }
+
+  /*********************************/
+  /* Free memory reserved for plot */
+  /*********************************/
+  delete plot;
 }
 
 // void Plot::MasterImages_w_SubImages(ImageSets a, ImageSets b, vector <Images> &c)
@@ -1896,273 +2258,265 @@ void Plot::MasterImage_w_SubImages(ImageSets a, vector <Images> &b, bool selenog
 // //   return;
 // // }
 
-// void Plot::PlotOverlap(OverlappedImages a, bool square)
-// {
-//   /*******************************************/
-//   /* Declaration/Initialization of variables */
-//   /*******************************************/
-//   double area1;
-//   double area2;
-//   double b1_height;
-//   double b1_width;
-//   double b1_x0;
-//   double b1_x1;
-//   double b1_y0;
-//   double b1_y1;
-//   double b2_height;
-//   double b2_width;
-//   double b2_x0;
-//   double b2_x1;
-//   double b2_y0;
-//   double b2_y1;
-//   double b3_x0;
-//   double b3_x1;
-//   double b3_y0;
-//   double b3_y1;
-//   double max;
-//   double max_x;
-//   double max_y;
-//   double min_x;
-//   double min_y;
-//   double image1_x_origin;
-//   double image1_y_origin;
-//   double image2_x_origin;
-//   double image2_y_origin;
-//   int canheight;
-//   int canwidth;
-//   string buffer;
-//   string filename;
-//   string image1_name;
-//   string image1_x_origin_condition;
-//   string image1_y_origin_condition;
-//   string image2_name;
-//   string image2_x_origin_condition;
-//   string image2_y_origin_condition;
-//   TBox *b1;
-//   TBox *b2;
-//   TBox *b3;
-//   TCanvas *can;
-//   TEllipse *el1;
-//   TEllipse *el2;
-//   TLegend *leg;
+void Plot::PlotOverlap(OverlappedImages a, bool print_coordinates)
+{
+  /****************************************************/
+  /* Declaration/Initialization of function variables */
+  /****************************************************/
+  double dot;
+  double image1_x_high;
+  double image1_x_low;
+  double image1_y_high;
+  double image1_y_low;
+  double image2_x_high;
+  double image2_x_low;
+  double image2_y_high;
+  double image2_y_low;
+  double spacing;
+  double x_high;
+  double x_low;
+  double x_reference_point;
+  double y_high;
+  double y_low;
+  double y_reference_point;
+  int canheight;
+  int canwidth;
+  int n;
+  string buffer;
+  string filename;
+  string image1_name;
+  string image2_name;
+  TCanvas *can;
+  TPolyLine *plot1;
+  TPolyLine *plot2;
+  TPolyLine *plot3;
+  TEllipse *el1;
+  TEllipse *el2;
+  TH1F *h1;
+  TLegend *leg;
+  vector <double> Image1_X_Coords;
+  vector <double> Image1_Y_Coords;
+  vector <double> Image2_X_Coords;
+  vector <double> Image2_Y_Coords;
+  vector <double> Overplot_X_Coords;
+  vector <double> Overplot_Y_Coords;
 
-//   /*******************************/
-//   /* Retrieve image1 information */
-//   /*******************************/
-//   image1_name = a.GetImage1_name();
-//   image1_x_origin_condition = a.GetImage1_x_origin_condition();
-//   image1_y_origin_condition = a.GetImage1_y_origin_condition();
-//   b1_height = a.GetImage1_height();
-//   b1_width = a.GetImage1_width();
-//   b1_x0 = a.GetImage1_x_low();
-//   b1_x1 = a.GetImage1_x_high();
-//   b1_y0 = a.GetImage1_y_low();
-//   b1_y1 = a.GetImage1_y_high();
+  /***********************/
+  /* Image 1 Information */
+  /***********************/
+  image1_name = a.GetImage1_name();
+  Image1_X_Coords.push_back(a.GetImage1_upper_left_longitude());
+  Image1_Y_Coords.push_back(a.GetImage1_upper_left_latitude());
+  Image1_X_Coords.push_back(a.GetImage1_upper_right_longitude());
+  Image1_Y_Coords.push_back(a.GetImage1_upper_right_latitude());    
+  Image1_X_Coords.push_back(a.GetImage1_lower_right_longitude());
+  Image1_Y_Coords.push_back(a.GetImage1_lower_right_latitude());
+  Image1_X_Coords.push_back(a.GetImage1_lower_left_longitude());
+  Image1_Y_Coords.push_back(a.GetImage1_lower_left_latitude());
+  Image1_X_Coords.push_back(a.GetImage1_upper_left_longitude());
+  Image1_Y_Coords.push_back(a.GetImage1_upper_left_latitude());
 
-//   /**********************/
-//   /* Retrieve box1 area */
-//   /**********************/
-//   area1 = a.GetImage1_area();
+  /***********************/
+  /* Image 2 Information */
+  /***********************/
+  image2_name = a.GetImage2_name();
+  Image2_X_Coords.push_back(a.GetImage2_upper_left_longitude());
+  Image2_Y_Coords.push_back(a.GetImage2_upper_left_latitude());
+  Image2_X_Coords.push_back(a.GetImage2_upper_right_longitude());
+  Image2_Y_Coords.push_back(a.GetImage2_upper_right_latitude());    
+  Image2_X_Coords.push_back(a.GetImage2_lower_right_longitude());
+  Image2_Y_Coords.push_back(a.GetImage2_lower_right_latitude());
+  Image2_X_Coords.push_back(a.GetImage2_lower_left_longitude());
+  Image2_Y_Coords.push_back(a.GetImage2_lower_left_latitude());
+  Image2_X_Coords.push_back(a.GetImage2_upper_left_longitude());
+  Image2_Y_Coords.push_back(a.GetImage2_upper_left_latitude());
 
-//   /*****************************/
-//   /* Retrieve box2 coordinates */
-//   /*****************************/
-//   image2_name = a.GetImage2_name();
-//   image2_x_origin_condition = a.GetImage2_x_origin_condition();
-//   image2_y_origin_condition = a.GetImage2_y_origin_condition();
-//   b2_height = a.GetImage2_height();
-//   b2_width = a.GetImage2_width();
-//   b2_x0 = a.GetImage2_x_low();
-//   b2_x1 = a.GetImage2_x_high();
-//   b2_y0 = a.GetImage2_y_low();
-//   b2_y1 = a.GetImage2_y_high();
-
-//   /**********************/
-//   /* Retrieve box2 area */
-//   /**********************/
-//   area2 = a.GetImage2_area();
-
-//   /*****************************/
-//   /* Retrieve box3 coordinates */
-//   /*****************************/
-//   b3_x0 = a.GetOverlap_x_low();
-//   b3_x1 = a.GetOverlap_x_high();
-//   b3_y0 = a.GetOverlap_y_low();
-//   b3_y1 = a.GetOverlap_y_high();
-
-//   /************************************/
-//   /* Determine minimum x and y values */
-//   /************************************/
-//   min_x = (b1_x0 < b2_x0) ? fabs(b1_x0) : fabs(b2_x0);
-//   min_y = (b1_y0 < b2_y0) ? fabs(b1_y0) : fabs(b2_y0);
-
-//   /************************************************/
-//   /* Translate boxes to first quadrant, if needed */
-//   /************************************************/
-//   if((b1_x0 < 0) || (b2_x0 < 0))
-//   {
-//     b1_x0 += min_x;
-//     b1_x1 += min_x;
-//     b2_x0 += min_x;
-//     b2_x1 += min_x;
-//     b3_x0 += min_x; 
-//     b3_x1 += min_x;
-//   }
-//   if((b1_y0 < 0) || (b2_y0 < 0))
-//   {
-//     b1_y0 += min_y;
-//     b1_y1 += min_y;
-//     b2_y0 += min_y;
-//     b2_y1 += min_y;
-//     b3_y0 += min_y;
-//     b3_y1 += min_y;
-//   }
-
-//   /**************************************/
-//   /* Recalculate minimum x and y values */
-//   /**************************************/
-//   min_x = (b1_x0 < b2_x0) ? fabs(b1_x0) : fabs(b2_x0);
-//   min_y = (b1_y0 < b2_y0) ? fabs(b1_y0) : fabs(b2_y0);
-
-//   /******************************/
-//   /* Shift boxes towards origin */
-//   /******************************/
-//   b1_x0 -= min_x;
-//   b1_x1 -= min_x;
-//   b1_y0 -= min_y;
-//   b1_y1 -= min_y;
-//   b2_x0 -= min_x;
-//   b2_x1 -= min_x;
-//   b2_y0 -= min_y;
-//   b2_y1 -= min_y;
-//   b3_x0 -= min_x;
-//   b3_x1 -= min_x;
-//   b3_y0 -= min_y;
-//   b3_y1 -= min_y;
-
-//   /***************************/
-//   /* Determine maximum value */
-//   /***************************/
-//   max_x = (b1_x1 > b2_x1) ? b1_x1 : b2_x1;
-//   max_y = (b1_y1 > b2_y1) ? b1_y1 : b2_y1;
-//   max = (max_x > max_y) ? max_x : max_y;
-
-//   /********************************/
-//   /* Force boxes into unit square */
-//   /********************************/
-//   b1_height /= max;
-//   b1_width /= max;
-//   b1_x0 /= max; 
-//   b1_x1 /= max;
-//   b1_y0 /= max;
-//   b1_y1 /= max;
-//   b2_height /= max;
-//   b2_width /= max;
-//   b2_x0 /= max;
-//   b2_x1 /= max;
-//   b2_y0 /= max;
-//   b2_y1 /= max;
-//   b3_x0 /= max;
-//   b3_x1 /= max;
-//   b3_y0 /= max;
-//   b3_y1 /= max;
-
-//   /************************/
-//   /* Define image origins */
-//   /************************/
-//   image1_x_origin = (image1_x_origin_condition.compare("MIN") == 0) ? b1_x0 : b1_x1;
-//   image1_y_origin = (image1_y_origin_condition.compare("MIN") == 0) ? b1_y0 : b1_y1;
-//   image2_x_origin = (image2_x_origin_condition.compare("MIN") == 0) ? b2_x0 : b2_x1;
-//   image2_y_origin = (image2_y_origin_condition.compare("MIN") == 0) ? b2_y0 : b2_y1;
-
-//   /*********************/
-//   /* Initialize Canvas */
-//   /*********************/
-//   canheight = 800;
-//   canwidth = 800;
-//   can = new TCanvas("Canvas", "", canheight, canwidth);
-
-//   /*************/
-//   /* Draw axes */
-//   /*************/
-//   buffer = image1_name+" vs "+image2_name+" Overlap; Relative X Size; Relative Y Size";
-//   can->DrawFrame(0.0, 0.0, 1.0, 1.0, buffer.c_str());
-
-//   /***********************/
-//   /* Plot overlap region */
-//   /***********************/
-//   b1 = new TBox(b1_x0, b1_y0, b1_x1, b1_y1);
-//   b1->SetFillColor(kYellow);
-//   b1->SetFillStyle(1001);
-//   b1->SetLineColor(kBlack);
-//   b2 = new TBox(b2_x0, b2_y0, b2_x1, b2_y1);
-//   b2->SetFillColor(kBlue);
-//   b2->SetFillStyle(1001);
-//   b2->SetLineColor(kBlack);
-//   b3 = new TBox(b3_x0, b3_y0, b3_x1, b3_y1);
-//   b3->SetFillColor(kGreen);
-//   b3->SetFillStyle(1001);
-//   b3->SetLineColor(kBlack);
-//   if(area1 > area2)
-//   {
-//     b1->Draw("l");
-//     b2->Draw("l");
-//   }
-//   else
-//   {
-//     b2->Draw("l");
-//     b1->Draw("l");
-//   }
-//   b3->Draw("l");
-//   gPad->RedrawAxis();
-
-//   /***********************/
-//   /* Plot defined origin */
-//   /***********************/
-//   el1 = new TEllipse(image1_x_origin, image1_y_origin, 0.01);
-//   el1->SetFillColor(kRed);
-//   el1->Draw();
-
-//   /***********************/
-//   /* Plot defined origin */
-//   /***********************/
-//   el2 = new TEllipse(image2_x_origin, image2_y_origin, 0.01);
-//   el2->SetFillColor(kViolet);
-//   el2->Draw();
-
-//   /**********/
-//   /* Legend */
-//   /**********/
-//   leg = new TLegend(0.7,0.7,0.9,0.9);
-//   //leg->SetHeader("","C"); // option "C" allows to center the header
-//   buffer = "Image1: "+image1_name;
-//   leg->AddEntry(b1, buffer.c_str(), "f");
-//   buffer = "Image2: "+image2_name;
-//   leg->AddEntry(b2, buffer.c_str(), "f");
-//   leg->AddEntry(b3, "Overlap region", "f");
-//   leg->AddEntry(el1, "Image1 Origin", "f");
-//   leg->AddEntry(el2, "Image2 Origin", "f");
-//   leg->Draw();
-
-//   /*********************/
-//   /* Save plot to file */
-//   /*********************/
-//   filename = "OverlapPlot.ps";
-//   can->SaveAs(filename.c_str());
-
-//   /***********************************/
-//   /* Free memory reserved for canvas */
-//   /***********************************/
-//   delete b1;
-//   delete b2;
-//   delete b3;
-//   delete el1;
-//   delete el2;
-//   delete leg;
-//   delete can;
+  /*********************************/
+  /* Overplot Plotting Coordinates */
+  /*********************************/
+  Overplot_X_Coords.push_back(a.GetOverlap_upper_left_longitude());
+  Overplot_Y_Coords.push_back(a.GetOverlap_upper_left_latitude());
+  Overplot_X_Coords.push_back(a.GetOverlap_upper_right_longitude());
+  Overplot_Y_Coords.push_back(a.GetOverlap_upper_right_latitude());    
+  Overplot_X_Coords.push_back(a.GetOverlap_lower_right_longitude());
+  Overplot_Y_Coords.push_back(a.GetOverlap_lower_right_latitude());
+  Overplot_X_Coords.push_back(a.GetOverlap_lower_left_longitude());
+  Overplot_Y_Coords.push_back(a.GetOverlap_lower_left_latitude());
+  Overplot_X_Coords.push_back(a.GetOverlap_upper_left_longitude());
+  Overplot_Y_Coords.push_back(a.GetOverlap_upper_left_latitude());
   
-//   return;
-// }
+  /*********************/
+  /* Initialize Canvas */
+  /*********************/
+  canheight = 1200;
+  canwidth = 500;
+  can = new TCanvas("Canvas", "", canheight, canwidth);
+  can->SetGridx();
+  can->SetGridy();
+
+  /***************************/
+  /* Determine plotting area */
+  /***************************/
+  if(Image1_X_Coords[0] < Image1_X_Coords[1])
+  {
+    image1_x_high = (Image1_X_Coords[1] > Image1_X_Coords[2]) ? Image1_X_Coords[1] : Image1_X_Coords[2];
+    image1_x_low  = (Image1_X_Coords[0] < Image1_X_Coords[3]) ? Image1_X_Coords[0] : Image1_X_Coords[3];
+  }
+  else
+  {
+    image1_x_high = (Image1_X_Coords[0] > Image1_X_Coords[3]) ? Image1_X_Coords[0] : Image1_X_Coords[3];
+    image1_x_low  = (Image1_X_Coords[1] < Image1_X_Coords[2]) ? Image1_X_Coords[1] : Image1_X_Coords[2];
+  }
+  if(Image1_Y_Coords[0] < Image1_Y_Coords[3])
+  {
+    image1_y_high = (Image1_Y_Coords[2] > Image1_Y_Coords[3]) ? Image1_Y_Coords[2] : Image1_Y_Coords[3];
+    image1_y_low  = (Image1_Y_Coords[0] < Image1_Y_Coords[1]) ? Image1_Y_Coords[0] : Image1_Y_Coords[1];
+  }
+  else
+  {
+    image1_y_high = (Image1_Y_Coords[0] > Image1_Y_Coords[1]) ? Image1_Y_Coords[0] : Image1_Y_Coords[1];
+    image1_y_low  = (Image1_Y_Coords[2] < Image1_Y_Coords[3]) ? Image1_Y_Coords[2] : Image1_Y_Coords[3];
+  }
+  if(Image2_X_Coords[0] < Image2_X_Coords[1])
+  {
+    image2_x_high = (Image2_X_Coords[1] > Image2_X_Coords[2]) ? Image2_X_Coords[1] : Image2_X_Coords[2];
+    image2_x_low  = (Image2_X_Coords[0] < Image2_X_Coords[3]) ? Image2_X_Coords[0] : Image2_X_Coords[3];
+  }
+  else
+  {
+    image2_x_high = (Image2_X_Coords[0] > Image2_X_Coords[3]) ? Image2_X_Coords[0] : Image2_X_Coords[3];
+    image2_x_low  = (Image2_X_Coords[1] < Image2_X_Coords[2]) ? Image2_X_Coords[1] : Image2_X_Coords[2];
+  }
+  if(Image2_Y_Coords[0] < Image2_Y_Coords[3])
+  {
+    image2_y_high = (Image2_Y_Coords[2] > Image2_Y_Coords[3]) ? Image2_Y_Coords[2] : Image2_Y_Coords[3];
+    image2_y_low  = (Image2_Y_Coords[0] < Image2_Y_Coords[1]) ? Image2_Y_Coords[0] : Image2_Y_Coords[1];
+  }
+  else
+  {
+    image2_y_high = (Image2_Y_Coords[0] > Image2_Y_Coords[1]) ? Image2_Y_Coords[0] : Image2_Y_Coords[1];
+    image2_y_low  = (Image2_Y_Coords[2] < Image2_Y_Coords[3]) ? Image2_Y_Coords[2] : Image2_Y_Coords[3];
+  }
+  x_high = (image1_x_high > image2_x_high) ? image1_x_high : image2_x_high;
+  x_low = (image1_x_low < image2_x_low) ? image1_x_low : image2_x_low;
+  y_high = (image1_y_high > image2_y_high) ? image1_y_high : image2_y_high;
+  y_low = (image1_y_low < image2_y_low) ? image1_y_low : image2_y_low;
+
+  
+  /*************/
+  /* Draw axes */
+  /*************/
+  buffer = image1_name+" vs "+image2_name+"; X [Degree]; Y [Degree]";
+  spacing = 1E-4;
+  h1 = can->DrawFrame(x_low-spacing, y_low-spacing, x_high+spacing, y_high+spacing, buffer.c_str());
+  h1->GetYaxis()->SetNdivisions(10);
+  h1->GetXaxis()->SetNdivisions(10);
+  
+  /****************/
+  /* Plot image 1 */
+  /****************/
+  n = (int)Image1_X_Coords.size();
+  plot1 = new TPolyLine(n, Image1_X_Coords.data(), Image1_Y_Coords.data());
+  plot1->SetLineColor(kBlue);
+  plot1->SetLineWidth(2);
+  plot1->Draw();
+
+  /****************/
+  /* Plot image 2 */
+  /****************/
+  n = (int)Image2_X_Coords.size();
+  plot2 = new TPolyLine(n, Image2_X_Coords.data(), Image2_Y_Coords.data());
+  plot2->SetLineColor(kYellow);
+  plot2->SetLineWidth(2);
+  plot2->Draw();
+
+  /****************/
+  /* Plot Overlap */
+  /****************/
+  n = (int)Overplot_X_Coords.size();
+  plot3 = new TPolyLine(n, Overplot_X_Coords.data(), Overplot_Y_Coords.data());
+  plot3->SetLineColor(kGreen);
+  plot3->SetLineWidth(2);
+  plot3->Draw();
+  
+  /*************************/
+  /* Plot 1 defined origin */
+  /*************************/
+  x_reference_point = a.GetImage1_upper_left_longitude();
+  y_reference_point = a.GetImage1_upper_left_latitude();
+  dot = 0.01*abs(a.GetImage1_upper_left_longitude()-a.GetImage1_upper_right_longitude());
+  el1 = new TEllipse(x_reference_point, y_reference_point, dot);
+  el1->SetFillColorAlpha(kBlue, 0.50);
+  el1->SetFillStyle(4050);
+  el1->SetLineColor(kRed);
+  el1->Draw();
+
+  /*************************/
+  /* Plot 2 defined origin */
+  /*************************/
+  x_reference_point = a.GetImage2_upper_left_longitude();
+  y_reference_point = a.GetImage2_upper_left_latitude();
+  dot = 0.01*abs(a.GetImage2_upper_left_longitude()-a.GetImage2_upper_right_longitude());
+  el2 = new TEllipse(x_reference_point, y_reference_point, dot);
+  el2->SetFillColorAlpha(kGreen, 0.50);
+  el2->SetFillStyle(4050);
+  el2->SetLineColor(kRed);
+  el2->Draw();
+  
+  /**********/
+  /* Legend */
+  /**********/
+  leg = new TLegend(0.7,0.7,0.9,0.9);
+  //leg->SetHeader("","C"); // option "C" allows to center the header
+  buffer = "Sub-image: "+image1_name;
+  leg->AddEntry(plot1, buffer.c_str(), "f");
+  buffer = "Sub-image: "+image2_name;
+  leg->AddEntry(plot2, buffer.c_str(), "f");
+  buffer = "Overplot Region";
+  leg->AddEntry(plot3, buffer.c_str(), "f");
+  leg->AddEntry(el1, "Image 1 Origin", "f");
+  leg->AddEntry(el2, "Image 2 Origin", "f");
+  leg->Draw();
+
+  /*********************/
+  /* Save plot to file */
+  /*********************/
+  filename = image1_name+"_vs_"+image2_name+"_Graphic.ps";
+  can->SaveAs(filename.c_str());
+
+  /*******************************/
+  /* Print coordinates to screen */
+  /*******************************/
+  if(print_coordinates)
+  {
+    printf("Coordinates for image 1 %s.\n", image1_name.c_str());
+    for(int i=0; i<n; i++)
+    {
+      printf("Corner %d: %lf degrees longitude and %lf degrees latitude\n", i+1, Image1_X_Coords[i], Image1_Y_Coords[i]);
+    }
+    printf("\nCoordinates for image 2 %s.\n", image2_name.c_str());
+    for(int i=0; i<n; i++)
+    {
+      printf("Corner %d: %lf degrees longitude and %lf degrees latitude\n", i+1, Image2_X_Coords[i], Image2_Y_Coords[i]);
+    }
+    printf("\nCoordinates for overplot region.\n");
+    for(int i=0; i<n; i++)
+    {
+      printf("Corner %d: %lf degrees longitude and %lf degrees latitude\n", i+1, Overplot_X_Coords[i], Overplot_Y_Coords[i]);
+    }
+  }
+  
+  /***********************************/
+  /* Free memory reserved for canvas */
+  /***********************************/
+  delete plot1;
+  delete plot2;
+  delete plot3;
+  delete el1;
+  delete el2;
+  delete leg;
+  delete can;
+}
 
 void Plot::SubImage(Images a, bool selenographic, bool print_coordinates)
 {
@@ -2232,7 +2586,7 @@ void Plot::SubImage(Images a, bool selenographic, bool print_coordinates)
   /* Initialize Canvas */
   /*********************/
   canheight = 1200;
-  canwidth = 650;
+  canwidth = 600;
   can = new TCanvas("Canvas", "", canheight, canwidth);
   can->SetGridx();
   can->SetGridy();
@@ -2295,14 +2649,13 @@ void Plot::SubImage(Images a, bool selenographic, bool print_coordinates)
     Y_Coords.push_back(lower_left_y);
     X_Coords.push_back(upper_left_x);
     Y_Coords.push_back(upper_left_y);
-    dot = 0.01*(a.GetPhysical_width());
+    dot = 0.01*abs(upper_left_x-upper_right_x);
   }
   n = (int)X_Coords.size();
   plot = new TPolyLine(n, X_Coords.data(), Y_Coords.data());
   plot->SetLineColor(kGreen);
   plot->SetLineWidth(2);
   plot->Draw();
-  gPad->RedrawAxis();
 
   /***********************/
   /* Plot defined origin */
@@ -2353,154 +2706,267 @@ void Plot::SubImage(Images a, bool selenographic, bool print_coordinates)
   delete can;
 }
 
-// void Plot::SubImages(Images a, Images b)
-// {
-//   /****************************************************/
-//   /* Declaration/Initialization of function variables */
-//   /****************************************************/
-//   double spacing = 0.05E3;
-//   double image1_x_high;
-//   double image1_x_low;
-//   double image1_x_origin;
-//   double image1_y_high;
-//   double image1_y_low;
-//   double image1_y_origin;
-//   double image2_x_high;
-//   double image2_x_low;
-//   double image2_x_origin;
-//   double image2_y_high;
-//   double image2_y_low;
-//   double image2_y_origin;
-//   double max_x;
-//   double max_y;
-//   double min_x;
-//   double min_y;
-//   int canheight;
-//   int canwidth;
-//   string buffer;
-//   string filename;
-//   string image1_name;
-//   string image2_name;
-//   TCanvas *can;
-//   TBox *box1;
-//   TBox *box2;
-//   TEllipse *el1;
-//   TEllipse *el2;
-//   TLegend *leg;
-    
-//   /*******************************/
-//   /* Retrieve image1 information */
-//   /*******************************/
-//   image1_name = a.GetName();
-//   image1_x_high = a.GetX_high();
-//   image1_x_low = a.GetX_low();
-//   image1_x_origin = a.GetX_origin();
-//   image1_y_high = a.GetY_high();
-//   image1_y_low = a.GetY_low();
-//   image1_y_origin = a.GetY_origin();
+void Plot::SubImages(Images a, Images b, bool selenographic, bool print_coordinates)
+{
+  /****************************************************/
+  /* Declaration/Initialization of function variables */
+  /****************************************************/
+  double image1_dot;
+  double image1_x_high;
+  double image1_x_low;
+  double image1_x_reference;
+  double image1_y_high;
+  double image1_y_low;
+  double image1_y_reference;
+  double image2_dot;
+  double image2_x_high;
+  double image2_x_low;
+  double image2_x_reference;
+  double image2_y_high;
+  double image2_y_low;
+  double image2_y_reference;
+  double spacing;
+  double x_high;
+  double x_low;
+  double y_high;
+  double y_low;
+  int canheight;
+  int canwidth;
+  int n;
+  string buffer;
+  string filename;
+  string image1_name;
+  string image2_name;
+  TCanvas *can;
+  TPolyLine *plot1;
+  TPolyLine *plot2;
+  TEllipse *el1;
+  TEllipse *el2;
+  TH1F *h1;
+  TLegend *leg;
+  vector <double> Image1_X_Coords;
+  vector <double> Image1_Y_Coords;
+  vector <double> Image2_X_Coords;
+  vector <double> Image2_Y_Coords;
 
-//   /*******************************/
-//   /* Retrieve image2 information */
-//   /*******************************/
-//   image2_name = b.GetName();
-//   image2_x_high = b.GetX_high();
-//   image2_x_low = b.GetX_low();
-//   image2_x_origin = b.GetX_origin();
-//   image2_y_high = b.GetY_high();
-//   image2_y_low = b.GetY_low();
-//   image2_y_origin = b.GetY_origin();
-
-//   /************************************************/
-//   /* Determine minimum and maximum x and y values */
-//   /************************************************/
-//   max_x = (image1_x_high > image2_x_high) ? image1_x_high : image2_x_high;
-//   max_y = (image1_y_high > image2_y_high) ? image1_y_high : image2_y_high;
-//   min_x = (image1_x_low < image2_x_low) ? image1_x_low : image2_x_low;
-//   min_y = (image1_y_low < image2_y_low) ? image1_y_low : image2_y_low;
-
-//   /*********************/
-//   /* Initialize Canvas */
-//   /*********************/
-//   canheight = 800;
-//   canwidth = 800;
-//   can = new TCanvas("Canvas", "", canheight, canwidth);
-//   can->SetGridx();
-//   can->SetGridy();
-
-//   /*************/
-//   /* Draw axes */
-//   /*************/
-//   buffer = image1_name+" vs "+image2_name+"; X [m]; Y [m]";
-//   TH1F * h1 = can->DrawFrame(min_x-spacing, min_y-spacing, max_x+spacing, max_y+spacing, buffer.c_str());
-//   h1->GetYaxis()->SetNdivisions(5);
-//   h1->GetYaxis()->SetTitleOffset(0.5);
-//   h1->GetXaxis()->SetNdivisions(5);
-
-//   /***************/
-//   /* Plot image1 */
-//   /***************/
-//   box1 = new TBox(image1_x_low, image1_y_low, image1_x_high, image1_y_high);
-//   box1->SetFillColor(kYellow);
-//   box1->SetFillStyle(1001);
-//   box1->SetLineColor(kBlack);
-//   box1->SetLineWidth(2);
-//   box1->Draw("l");
-//   gPad->RedrawAxis();
-
-//   /***************/
-//   /* Plot image2 */
-//   /***************/
-//   box2 = new TBox(image2_x_low, image2_y_low, image2_x_high, image2_y_high);
-//   box2->SetFillColor(kBlue);
-//   box2->SetFillStyle(1001);
-//   box2->SetLineColor(kBlack);
-//   box2->SetLineWidth(2);
-//   box2->Draw("l");
-//   gPad->RedrawAxis();
-
-//   /**********************************/
-//   /* Plot defined origin for image1 */
-//   /**********************************/
-//   el1 = new TEllipse(image1_x_origin, image1_y_origin, 5.0);
-//   el1->SetFillColor(kRed);
-//   el1->Draw();
-
-//   /**********************************/
-//   /* Plot defined origin for image2 */
-//   /**********************************/
-//   el2 = new TEllipse(image2_x_origin, image2_y_origin, 5.0);
-//   el2->SetFillColor(kViolet);
-//   el2->Draw();
+  /***********************/
+  /* Image 1 Information */
+  /***********************/
+  image1_name = a.GetName();
+  if(selenographic)
+  {    
+    Image1_X_Coords.push_back(a.GetUpper_left_longitude());
+    Image1_Y_Coords.push_back(a.GetUpper_left_latitude());
+    Image1_X_Coords.push_back(a.GetUpper_right_longitude());
+    Image1_Y_Coords.push_back(a.GetUpper_right_latitude());    
+    Image1_X_Coords.push_back(a.GetLower_right_longitude());
+    Image1_Y_Coords.push_back(a.GetLower_right_latitude());
+    Image1_X_Coords.push_back(a.GetLower_left_longitude());
+    Image1_Y_Coords.push_back(a.GetLower_left_latitude());
+    Image1_X_Coords.push_back(a.GetUpper_left_longitude());
+    Image1_Y_Coords.push_back(a.GetUpper_left_latitude());
+    image1_x_reference = a.GetUpper_left_longitude();
+    image1_y_reference = a.GetUpper_left_latitude();
+    image1_dot = 0.01*abs(a.GetUpper_left_longitude()-a.GetUpper_right_longitude());
+  }
+  else
+  {
+    Image1_X_Coords.push_back(a.GetUpper_left_x());
+    Image1_Y_Coords.push_back(a.GetUpper_left_y());
+    Image1_X_Coords.push_back(a.GetUpper_right_x());
+    Image1_Y_Coords.push_back(a.GetUpper_right_y());    
+    Image1_X_Coords.push_back(a.GetLower_right_x());
+    Image1_Y_Coords.push_back(a.GetLower_right_y());
+    Image1_X_Coords.push_back(a.GetLower_left_x());
+    Image1_Y_Coords.push_back(a.GetLower_left_y());
+    Image1_X_Coords.push_back(a.GetUpper_left_x());
+    Image1_Y_Coords.push_back(a.GetUpper_left_y());
+    image1_x_reference = a.GetUpper_left_x();
+    image1_y_reference = a.GetUpper_left_y();
+    image1_dot = 0.01*abs(a.GetUpper_left_x()-a.GetUpper_right_x());
+  }
   
-//   /**********/
-//   /* Legend */
-//   /**********/
-//   leg = new TLegend(0.7,0.7,0.9,0.9);
-//   //leg->SetHeader("","C"); // option "C" allows to center the header
-//   buffer = "Sub-image: "+image1_name;
-//   leg->AddEntry(box1, buffer.c_str(), "f");
-//   buffer = "Sub-image: "+image2_name;
-//   leg->AddEntry(box2, buffer.c_str(), "f");
-//   leg->AddEntry(el1, "Image1 Origin", "f");
-//   leg->AddEntry(el2, "Image2 Origin", "f");
-//   leg->Draw();
+  /***********************/
+  /* Image 2 Information */
+  /***********************/
+  image2_name = b.GetName();
+  if(selenographic)
+  {
+    Image2_X_Coords.push_back(b.GetUpper_left_longitude());
+    Image2_Y_Coords.push_back(b.GetUpper_left_latitude());
+    Image2_X_Coords.push_back(b.GetUpper_right_longitude());
+    Image2_Y_Coords.push_back(b.GetUpper_right_latitude());    
+    Image2_X_Coords.push_back(b.GetLower_right_longitude());
+    Image2_Y_Coords.push_back(b.GetLower_right_latitude());
+    Image2_X_Coords.push_back(b.GetLower_left_longitude());
+    Image2_Y_Coords.push_back(b.GetLower_left_latitude());
+    Image2_X_Coords.push_back(b.GetUpper_left_longitude());
+    Image2_Y_Coords.push_back(b.GetUpper_left_latitude());
+    image2_x_reference = b.GetUpper_left_longitude();
+    image2_y_reference = b.GetUpper_left_latitude();
+    image2_dot = 0.01*abs(b.GetUpper_left_longitude()-b.GetUpper_right_longitude());
+  }
+  else
+  {
+    Image2_X_Coords.push_back(b.GetUpper_left_x());
+    Image2_Y_Coords.push_back(b.GetUpper_left_y());
+    Image2_X_Coords.push_back(b.GetUpper_right_x());
+    Image2_Y_Coords.push_back(b.GetUpper_right_y());    
+    Image2_X_Coords.push_back(b.GetLower_right_x());
+    Image2_Y_Coords.push_back(b.GetLower_right_y());
+    Image2_X_Coords.push_back(b.GetLower_left_x());
+    Image2_Y_Coords.push_back(b.GetLower_left_y());
+    Image2_X_Coords.push_back(b.GetUpper_left_x());
+    Image2_Y_Coords.push_back(b.GetUpper_left_y());
+    image2_x_reference = b.GetUpper_left_x();
+    image2_y_reference = b.GetUpper_left_y();
+    image2_dot = 0.01*abs(b.GetUpper_left_longitude()-b.GetUpper_right_longitude());
+  }
+  
+  /*********************/
+  /* Initialize Canvas */
+  /*********************/
+  canheight = 1200;
+  canwidth = 500;
+  can = new TCanvas("Canvas", "", canheight, canwidth);
+  can->SetGridx();
+  can->SetGridy();
 
-//   /*********************/
-//   /* Save plot to file */
-//   /*********************/
-//   filename = image1_name+"_vs_"+image2_name+"_Graphic.ps";
-//   can->SaveAs(filename.c_str());
+  /***************************/
+  /* Determine plotting area */
+  /***************************/
+  if(Image1_X_Coords[0] < Image1_X_Coords[1])
+  {
+    image1_x_high = (Image1_X_Coords[1] > Image1_X_Coords[2]) ? Image1_X_Coords[1] : Image1_X_Coords[2];
+    image1_x_low  = (Image1_X_Coords[0] < Image1_X_Coords[3]) ? Image1_X_Coords[0] : Image1_X_Coords[3];
+  }
+  else
+  {
+    image1_x_high = (Image1_X_Coords[0] > Image1_X_Coords[3]) ? Image1_X_Coords[0] : Image1_X_Coords[3];
+    image1_x_low  = (Image1_X_Coords[1] < Image1_X_Coords[2]) ? Image1_X_Coords[1] : Image1_X_Coords[2];
+  }
+  if(Image1_Y_Coords[0] < Image1_Y_Coords[3])
+  {
+    image1_y_high = (Image1_Y_Coords[2] > Image1_Y_Coords[3]) ? Image1_Y_Coords[2] : Image1_Y_Coords[3];
+    image1_y_low  = (Image1_Y_Coords[0] < Image1_Y_Coords[1]) ? Image1_Y_Coords[0] : Image1_Y_Coords[1];
+  }
+  else
+  {
+    image1_y_high = (Image1_Y_Coords[0] > Image1_Y_Coords[1]) ? Image1_Y_Coords[0] : Image1_Y_Coords[1];
+    image1_y_low  = (Image1_Y_Coords[2] < Image1_Y_Coords[3]) ? Image1_Y_Coords[2] : Image1_Y_Coords[3];
+  }
+  if(Image2_X_Coords[0] < Image2_X_Coords[1])
+  {
+    image2_x_high = (Image2_X_Coords[1] > Image2_X_Coords[2]) ? Image2_X_Coords[1] : Image2_X_Coords[2];
+    image2_x_low  = (Image2_X_Coords[0] < Image2_X_Coords[3]) ? Image2_X_Coords[0] : Image2_X_Coords[3];
+  }
+  else
+  {
+    image2_x_high = (Image2_X_Coords[0] > Image2_X_Coords[3]) ? Image2_X_Coords[0] : Image2_X_Coords[3];
+    image2_x_low  = (Image2_X_Coords[1] < Image2_X_Coords[2]) ? Image2_X_Coords[1] : Image2_X_Coords[2];
+  }
+  if(Image2_Y_Coords[0] < Image2_Y_Coords[3])
+  {
+    image2_y_high = (Image2_Y_Coords[2] > Image2_Y_Coords[3]) ? Image2_Y_Coords[2] : Image2_Y_Coords[3];
+    image2_y_low  = (Image2_Y_Coords[0] < Image2_Y_Coords[1]) ? Image2_Y_Coords[0] : Image2_Y_Coords[1];
+  }
+  else
+  {
+    image2_y_high = (Image2_Y_Coords[0] > Image2_Y_Coords[1]) ? Image2_Y_Coords[0] : Image2_Y_Coords[1];
+    image2_y_low  = (Image2_Y_Coords[2] < Image2_Y_Coords[3]) ? Image2_Y_Coords[2] : Image2_Y_Coords[3];
+  }
+  x_high = (image1_x_high > image2_x_high) ? image1_x_high : image2_x_high;
+  x_low = (image1_x_low < image2_x_low) ? image1_x_low : image2_x_low;
+  y_high = (image1_y_high > image2_y_high) ? image1_y_high : image2_y_high;
+  y_low = (image1_y_low < image2_y_low) ? image1_y_low : image2_y_low;
+  
+  /*************/
+  /* Draw axes */
+  /*************/
+  buffer = image1_name+" vs "+image2_name+"; X [Degree]; Y [Degree]";
+  spacing = (selenographic) ? 1E-4 : 1E3;
+  h1 = can->DrawFrame(x_low-spacing, y_low-spacing, x_high+spacing, y_high+spacing, buffer.c_str());
+  h1->GetYaxis()->SetNdivisions(10);
+  h1->GetXaxis()->SetNdivisions(10);
+  
+  /****************/
+  /* Plot image 1 */
+  /****************/
+  n = (int)Image1_X_Coords.size();
+  plot1 = new TPolyLine(n, Image1_X_Coords.data(), Image1_Y_Coords.data());
+  plot1->SetLineColor(kBlue);
+  plot1->SetLineWidth(2);
+  plot1->Draw();
 
-//   /***********************************/
-//   /* Free memory reserved for canvas */
-//   /***********************************/
-//   delete box1;
-//   delete box2;
-//   delete el1;
-//   delete el2;
-//   delete leg;
-//   delete can;
-// }
+  /****************/
+  /* Plot image 2 */
+  /****************/
+  n = (int)Image2_X_Coords.size();
+  plot2 = new TPolyLine(n, Image2_X_Coords.data(), Image2_Y_Coords.data());
+  plot2->SetLineColor(kGreen);
+  plot2->SetLineWidth(2);
+  plot2->Draw();
+  
+  /*************************/
+  /* Plot 1 defined origin */
+  /*************************/
+  el1 = new TEllipse(image1_x_reference, image1_y_reference, image1_dot);
+  el1->SetFillColorAlpha(kBlue, 0.50);
+  el1->SetFillStyle(4050);
+  el1->SetLineColor(kRed);
+  el1->Draw();
+
+  /*************************/
+  /* Plot 2 defined origin */
+  /*************************/
+  el2 = new TEllipse(image2_x_reference, image2_y_reference, image2_dot);
+  el2->SetFillColorAlpha(kGreen, 0.50);
+  el2->SetFillStyle(4050);
+  el2->SetLineColor(kRed);
+  el2->Draw();
+  
+  /**********/
+  /* Legend */
+  /**********/
+  leg = new TLegend(0.7,0.7,0.9,0.9);
+  //leg->SetHeader("","C"); // option "C" allows to center the header
+  buffer = "Sub-image: "+image1_name;
+  leg->AddEntry(plot1, buffer.c_str(), "f");
+  buffer = "Sub-image: "+image2_name;
+  leg->AddEntry(plot2, buffer.c_str(), "f");
+  leg->AddEntry(el1, "Image 1 Origin", "f");
+  leg->AddEntry(el2, "Image 2 Origin", "f");
+  leg->Draw();
+
+  /*********************/
+  /* Save plot to file */
+  /*********************/
+  filename = image1_name+"_vs_"+image2_name+"_Graphic.ps";
+  can->SaveAs(filename.c_str());
+
+  /*******************************/
+  /* Print coordinates to screen */
+  /*******************************/
+  if(print_coordinates)
+  {
+    printf("Coordinates for image 1 %s.\n", image1_name.c_str());
+    for(int i=0; i<n; i++)
+      printf("Corner %d: %lf degrees longitude and %lf degrees latitude\n", i+1, Image1_X_Coords[i], Image1_Y_Coords[i]);
+    printf("\nCoordinates for image 2 %s.\n", image2_name.c_str());
+    for(int i=0; i<n; i++)
+      printf("Corner %d: %lf degrees longitude and %lf degrees latitude\n", i+1, Image2_X_Coords[i], Image2_Y_Coords[i]);
+  }
+  
+  /***********************************/
+  /* Free memory reserved for canvas */
+  /***********************************/
+  delete plot1;
+  delete plot2;
+  delete el1;
+  delete el2;
+  delete leg;
+  delete can;
+}
 
 // void Plot::SubImage_w_craters(Images a, std::vector <Marks> &b)
 // {

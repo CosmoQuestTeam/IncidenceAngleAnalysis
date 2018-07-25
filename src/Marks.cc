@@ -4,29 +4,61 @@ using namespace std;
 
 Marks::Marks(int ID, int UID, int IID, int AID, int IUID, int MMID, int SMID, double X, double Y, double DIA, int SUBTIME, int C, double S, string T, string SUBTYPE, string DET, string CREATE, string UPDATE)
 {
-  diameter = DIA;
-  score = S;
-  x = X;
-  y = Y;
   application_id = AID;
   confirmed = C;
+  created_at = CREATE;
+  details = DET;
+  diameter = DIA;
   id = ID;
   image_id = IID;
   image_user_id = IUID;
+  latitude = 0;
+  longitude = 0;
   machine_mark_id = MMID;
+  physical_diameter = 0;
+  physical_x = 0;
+  physical_y = 0;
+  score = S;
   shared_mark_id = SMID;
   submit_time = SUBTIME;
-  user_id = UID;
-  created_at = CREATE;
-  details = DET;
   sub_type = SUBTYPE;
   type = T;
   updated_at = UPDATE;
+  user_id = UID;
+  x = X;
+  x_adjusted = 0;
+  y = Y;
+  y_adjusted = 0;
 }
 
 double Marks::GetDiameter()
 {
   return diameter;
+}
+
+double Marks::GetLatitude()
+{
+  return latitude;
+}
+
+double Marks::GetLongitude()
+{
+  return longitude;
+}
+
+double Marks::GetPhysical_diameter()
+{
+  return physical_diameter;
+}
+
+double Marks::GetPhysical_x()
+{
+  return physical_x;
+}
+
+double Marks::GetPhysical_y()
+{
+  return physical_y;
 }
 
 double Marks::GetScore()
@@ -39,9 +71,19 @@ double Marks::GetX()
   return x;
 }
 
+double Marks::GetX_adjusted()
+{
+  return x_adjusted;
+}
+
 double Marks::GetY()
 {
   return y;
+}
+
+double Marks::GetY_adjusted()
+{
+  return y_adjusted;
 }
 
 int Marks::GetApplication_id()
@@ -114,6 +156,32 @@ string Marks::GetUpdated_at()
 {
   return updated_at;
 }
+
+void Marks::AuxilaryFunction(vector <double> &adjustedpixelcoordinate, vector <double> &selenographiccoordinate, vector <double> &cartesiancoordinate, double d)
+{
+  /******************************************************/
+  /* Sets the adjusted (global image) pixel coordinates */
+  /******************************************************/
+  x_adjusted = adjustedpixelcoordinate[0];
+  y_adjusted = adjustedpixelcoordinate[1];
+  
+  /*******************************************/
+  /* Sets the latitude and longitude of mark */
+  /*******************************************/
+  longitude = selenographiccoordinate[0];
+  latitude = selenographiccoordinate[1];
+
+  /******************************************************************/
+  /* Sets the cartesian x and y position of mark in units of meters */
+  /******************************************************************/
+  physical_x = cartesiancoordinate[0];
+  physical_y = cartesiancoordinate[1];
+  
+  /**********************************/
+  /* Sets physical diameter of mark */
+  /**********************************/
+  physical_diameter = d;
+}  
 
 void * Marks::GetValue(string field)
 {

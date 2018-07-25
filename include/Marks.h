@@ -3,6 +3,7 @@
 #ifndef MARKS_H
 #define MARKS_H
 #include <string>
+#include <vector>
 
 class Marks
 {
@@ -11,9 +12,16 @@ class Marks
   /***********************************/
   private:
     double diameter;
+    double latitude;
+    double longitude;
+    double physical_diameter;
+    double physical_x;
+    double physical_y;
     double score;
     double x;
+    double x_adjusted;
     double y;
+    double y_adjusted;
     int application_id;
     int confirmed;
     int id;
@@ -35,9 +43,16 @@ class Marks
   public:
     Marks(int, int, int, int, int, int, int, double, double, double, int, int, double, std::string, std::string, std::string, std::string, std::string);
     double GetDiameter();
+    double GetLatitude();
+    double GetLongitude();
+    double GetPhysical_diameter();
+    double GetPhysical_x();
+    double GetPhysical_y();
     double GetScore();
     double GetX();
+    double GetX_adjusted();
     double GetY();
+    double GetY_adjusted();
     int GetApplication_id();
     int GetConfirmed();
     int GetId();
@@ -52,6 +67,7 @@ class Marks
     std::string GetSub_type();
     std::string GetType();
     std::string GetUpdated_at();
+    void AuxilaryFunction(std::vector <double> &, std::vector <double> &, std::vector <double> &, double);
     void * GetValue(std::string);
     void SetX(double);
     void SetY(double);

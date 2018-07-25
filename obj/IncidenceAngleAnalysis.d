@@ -4,6 +4,7 @@
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Images.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/EquirectangularProjection.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ProjectiveTransformation.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Quadrilateral.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ImageSets.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/IncidenceAngles.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/MySQLConnection.h \
@@ -21,6 +22,7 @@
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/resultset_metadata.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/cppconn/datatype.h \
   /usr/local/Cellar/mysql-connector-c++/1.1.9/include/mysql_connection.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Marks.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/OverlappedImages.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Plot.h \
   /usr/local/opt/root/include/root/TBox.h \
@@ -78,6 +80,11 @@
   /usr/local/opt/root/include/root/Math/ParamFunctor.h \
   /usr/local/opt/root/include/root/TGaxis.h \
   /usr/local/opt/root/include/root/TLine.h \
+  /usr/local/opt/root/include/root/TGraph.h \
+  /usr/local/opt/root/include/root/TVectorFfwd.h \
+  /usr/local/opt/root/include/root/TVectorDfwd.h \
+  /usr/local/opt/root/include/root/TFitResultPtr.h \
+  /usr/local/opt/root/include/root/TGraphErrors.h \
   /usr/local/opt/root/include/root/TH1.h \
   /usr/local/opt/root/include/root/TAxis.h \
   /usr/local/opt/root/include/root/TAttAxis.h \
@@ -88,9 +95,6 @@
   /usr/local/opt/root/include/root/TArrayI.h \
   /usr/local/opt/root/include/root/TArrayF.h \
   /usr/local/opt/root/include/root/Foption.h \
-  /usr/local/opt/root/include/root/TVectorFfwd.h \
-  /usr/local/opt/root/include/root/TVectorDfwd.h \
-  /usr/local/opt/root/include/root/TFitResultPtr.h \
   /usr/local/opt/root/include/root/THStack.h \
   /usr/local/opt/root/include/root/TLatex.h \
   /usr/local/opt/root/include/root/TText.h \
@@ -99,10 +103,16 @@
   /usr/local/opt/root/include/root/TPolyLine.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SearchImages.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortImages.h \
-  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ReadAuxilaryData.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Utilities.h \
-  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/Rectangle.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/CheckOverlap.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/ReadAuxilaryData.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveImages.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveImageSets.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/RetrieveMarks.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SearchIncidenceAngles.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SearchMarks.h \
   /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortImageSets.h \
-  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortIncidenceAngles.h
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortIncidenceAngles.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortMarks.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SortOverlappedImages.h \
+  /Users/mrichardson/Desktop/Incidence_Angle_Analysis/include/SphericalLawofCosines.h

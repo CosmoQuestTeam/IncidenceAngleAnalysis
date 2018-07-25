@@ -32,6 +32,10 @@ class ProjectiveTransformation
     ProjectiveTransformation();
     ProjectiveTransformation(std::vector < std::vector <double> > &, std::vector < std::vector <double> > &);
     double ComputeMatrixDeterminant_3X3(std::vector < std::vector <double> > &);
+    double ComputeSource2TargetCoordinate_x(double, double);
+    double ComputeSource2TargetCoordinate_y(double, double);
+    double ComputeTarget2SourceCoordinate_x(double, double);
+    double ComputeTarget2SourceCoordinate_y(double, double);
     std::vector <double> ComputeCoefficientMatrix(std::vector < std::vector <double> > &);
     std::vector <double> ComputeSource2TargetCoordinates(double, double);
     std::vector <double> ComputeTarget2SourceCoordinates(double, double);

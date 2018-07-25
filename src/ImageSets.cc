@@ -9,8 +9,6 @@ ImageSets::ImageSets(int ID, string NAME, int AID, double P, double SA, double U
   description = DESCRIP;
   details = DET;
   height = 0;
-  horizontal_latitudinal_change = 0;
-  horizontal_resolution = 0;
   id = ID;
   lower_left_latitude = LLLAT;
   lower_left_longitude = LLLONG;
@@ -29,8 +27,6 @@ ImageSets::ImageSets(int ID, string NAME, int AID, double P, double SA, double U
   minimum_x = 0;
   minimum_y = 0;
   name = NAME;
-  physical_height = 0;
-  physical_width = 0;
   pixel_resolution = PR;
   priority = P;
   sun_angle = SA;
@@ -45,21 +41,7 @@ ImageSets::ImageSets(int ID, string NAME, int AID, double P, double SA, double U
   upper_right_longitude = URLONG;
   upper_right_x = 0;
   upper_right_y = 0;
-  vertical_longitudinal_change = 0;
-  vertical_resolution = 0;
   width = 0;
-  x_shift = 0;
-  y_shift = 0;
-}
-
-double ImageSets::GetHorizontal_latitudinal_change()
-{
-  return horizontal_latitudinal_change;
-}
-
-double ImageSets::GetHorizontal_resolution()
-{
-  return horizontal_resolution;
 }
 
 double ImageSets::GetLower_left_latitude()
@@ -142,16 +124,6 @@ double ImageSets::GetMinimum_y()
   return minimum_y;
 }
 
-double ImageSets::GetPhysical_height()
-{
-  return physical_height;
-}
-
-double ImageSets::GetPhysical_width()
-{
-  return physical_width;
-}
-
 double ImageSets::GetPixel_resolution()
 {
   return pixel_resolution;
@@ -205,26 +177,6 @@ double ImageSets::GetUpper_right_x()
 double ImageSets::GetUpper_right_y()
 {
   return upper_right_y;
-}
-
-double ImageSets::GetVertical_longitudinal_change()
-{
-  return vertical_longitudinal_change;
-}
-
-double ImageSets::GetVertical_resolution()
-{
-  return vertical_resolution;
-}
-
-double ImageSets::ImageSets::GetX_shift()
-{
-  return x_shift;
-}
-
-double ImageSets::GetY_shift()
-{
-  return y_shift;
 }
 
 int ImageSets::GetApplication_id()
@@ -287,13 +239,22 @@ string ImageSets::GetUpper_left_corner_y_status()
   return upper_left_corner_y_status;
 }
 
-void ImageSets::AuxilaryFunction()
+vector <double> ImageSets::GetPhysical_height()
 {
-  /*****************************************************/
-  /* Step 1: Determine image reference point and shape */
-  /*****************************************************/
+  return physical_height;
+}
+
+vector <double> ImageSets::GetPhysical_width()
+{
+  return physical_width;
+}
+
+void ImageSets::AuxilaryFunction(bool CalculatePhysical_Height_Width)
+{
+  /*******************************************/
+  /* Step 1: Determine image reference point */
+  /*******************************************/
   DetermineImageReference();
-  DetermineImageShape();
 
   /*******************************************/
   /* Step 2: Retrieve image width and height */
@@ -318,86 +279,19 @@ void ImageSets::AuxilaryFunction()
   /*******************************************************/
   DetermineCoordinateExtrema();
   
-  /*****************************************************/
-  /* Step 5: Calculate physical image width and height */
-  /*****************************************************/
-  CalculatePhysical_width();
-  CalculatePhysical_height();
-
-  /***************************************************************/
-  /* Step 6: Calculate horizontal and vertical pixel resolutions */
-  /***************************************************************/
-  CalculateHorizontal_resolution();
-  CalculateVertical_resolution();
-
-  /**********************************************************************************/
-  /* Step 7: Calculate x and y shift from rectangular region into a rhomboid region */
-  /**********************************************************************************/
-  CalculateXShift();
-  CalculateYShift();
-  
   /*******************************************/
-  /* Step 8: Calculate transformation matrix */
+  /* Step 5: Calculate transformation matrix */
   /*******************************************/
   CalculateTransforms();
-}
 
-void ImageSets::CalculateHorizontal_resolution()
-{
-  /*******************************************/
-  /* Declaration/Initialization of variables */
-  /*******************************************/
-  double x_range;
-  double n_pixels;
-
-  /*********************/
-  /* Calculate x range */
-  /*********************/
-  x_range = physical_width;
-
-  /*******************************/
-  /* Retrieve number of x pixels */
-  /*******************************/
-  n_pixels = width;
-
-  /*****************************************/
-  /* Calculate horizontal pixel resolution */
-  /*****************************************/
-  horizontal_resolution = x_range/n_pixels;
-}
-
-void ImageSets::CalculatePhysical_height()
-{
-  physical_height = (upper_left_corner_y_status.compare("MAX") == 0) ? upper_left_y-lower_left_y : lower_left_y-upper_left_y;
-}
-
-void ImageSets::CalculatePhysical_width()
-{
-  physical_width = (upper_left_corner_x_status.compare("MAX") == 0) ? upper_left_x-upper_right_x : upper_right_x-upper_left_x;
-}
-
-void ImageSets::CalculateVertical_resolution()
-{
-  /*******************************************/
-  /* Declaration/Initialization of variables */
-  /*******************************************/
-  double y_range;
-  double n_pixels;
-
-  /*********************/
-  /* Calculate y range */
-  /*********************/
-  y_range = physical_height;
-
-  /*******************************/
-  /* Retrieve number of y pixels */
-  /*******************************/
-  n_pixels = height;
-
-  /***************************************/
-  /* Calculate vertical pixel resolution */
-  /***************************************/
-  vertical_resolution = y_range/n_pixels;
+  /****************************************************************/
+  /* Step 6: Calculate physical image width and height (Optional) */
+  /****************************************************************/
+  if(CalculatePhysical_Height_Width)
+  {
+    CalculatePhysical_width();
+    CalculatePhysical_height();  
+  }
 }
 
 void ImageSets::CalculateLower_left_x()
@@ -444,6 +338,34 @@ void ImageSets::CalculateLower_right_y()
   double phi_1 = 0; // Flat square projection (Unit: radian)
   double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
   lower_right_y = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
+}
+
+void ImageSets::CalculatePhysical_height()
+{
+  /*******************************************************************************/
+  /* Iterate through columns of image and calculate physical height along column */
+  /*******************************************************************************/
+  for(int i=0; i<width; i++)
+  {
+    double h_0 = pt.ComputeTarget2SourceCoordinate_y(i, 0);
+    double h_1 = pt.ComputeTarget2SourceCoordinate_y(i, height);
+    double diff = abs(h_1-h_0);
+    physical_height.push_back(diff); // Unit: meters
+  }
+}
+
+void ImageSets::CalculatePhysical_width()
+{
+  /************************************************************************/
+  /* Iterate through rows of image and calculate physical width along row */
+  /************************************************************************/
+  for(int i=0; i<height; i++)
+  {
+    double w_0 = pt.ComputeTarget2SourceCoordinate_x(0, i);
+    double w_1 = pt.ComputeTarget2SourceCoordinate_x(width, i);
+    double diff = abs(w_1-w_0);
+    physical_height.push_back(diff); // Unit: meters
+  }
 }
 
 void ImageSets::CalculateTransforms()
@@ -531,31 +453,6 @@ void ImageSets::CalculateUpper_right_y()
   upper_right_y = EquirectangularProjection::CalculateY(phi, phi_1, R_moon); // Unit: meter
 }
 
-void ImageSets::CalculateXShift()
-{
-  /*******************************************/
-  /* Calculate shift in x per pixel from     */
-  /* rectangular region into rhomboid region */
-  /*******************************************/
-  double lambda = vertical_longitudinal_change*(M_PI/180); // Unit: radian
-  double lambda_0 = 0; // Central meridian (Unit: radian)
-  double phi_1 = 0; // Flat square projection (Unit: radian)
-  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
-  x_shift = EquirectangularProjection::CalculateX(lambda, lambda_0, phi_1, R_moon)/height; // Unit: meters per pixel;
-}
-
-void ImageSets::CalculateYShift()
-{
-  /*******************************************/
-  /* Calculate shift in y per pixel from     */
-  /* rectangular region into rhomboid region */
-  /*******************************************/
-  double phi = horizontal_latitudinal_change*(M_PI/180); // Unit: radian
-  double phi_1 = 0; // Flat square projection (Unit: radian)
-  double R_moon = 1737400; // Physical mean radius of the moon (Unit: meter)
-  y_shift = EquirectangularProjection::CalculateY(phi, phi_1, R_moon)/width; // Unit: meters per pixel
-}
-
 void ImageSets::DetermineCoordinateExtrema()
 {
   /***************************************************************************/
@@ -606,19 +503,6 @@ void ImageSets::DetermineImageReference()
   /* respect to the lower left hand corner               */
   /*******************************************************/
   upper_left_corner_y_status = (upper_left_latitude < lower_left_latitude) ? "MIN" : "MAX";
-}
-
-void ImageSets::DetermineImageShape()
-{
-  /************************************************/
-  /* Determine if longitude varies along a column */
-  /************************************************/
-  vertical_longitudinal_change = lower_left_longitude-upper_left_longitude;
-  
-  /********************************************/
-  /* Determine if latitude varies along a row */
-  /********************************************/
-  horizontal_latitudinal_change = upper_right_latitude-upper_left_latitude;
 }
 
 void ImageSets::RetrieveHeight()

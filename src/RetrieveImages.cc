@@ -29,14 +29,11 @@ void RetrieveImages::Display(vector <Images> &list)
   /********************/
   /* Print header row */
   /********************/
-  printf("%-5s %-4s %-3s %-19s %4s %4s %4s %11s %11s %11s %11s %11s %11s %11s %11s\n", 
+  printf("%-5s %-4s %-3s %-19s %11s %11s %11s %11s %11s %11s %11s %11s\n", 
 	 "ID", 
 	 "ISID", 
 	 "AID", 
-	 "NAME", 
-	 "PR",
-	 "HR",
-	 "VR",
+	 "NAME",
 	 "ULX",
 	 "ULY",
 	 "URX",
@@ -51,14 +48,11 @@ void RetrieveImages::Display(vector <Images> &list)
   /********************/
   nelements = (int)list.size();
   for(int i=0; i<nelements; i++)
-    printf("%-5d %-4d %-3d %-19s %4.2lf %4.2lf %4.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf\n", 
+    printf("%-5d %-4d %-3d %-19s %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf %11.2lf\n", 
 	   list[i].GetId(), 
 	   list[i].GetImage_set_id(), 
 	   list[i].GetApplication_id(), 
 	   list[i].GetName().c_str(), 
-	   list[i].GetPixel_resolution(),
-	   list[i].GetHorizontal_resolution(),
-	   list[i].GetVertical_resolution(),
 	   list[i].GetUpper_left_x(), 
 	   list[i].GetUpper_left_y(),
 	   list[i].GetUpper_right_x(), 
